@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mohanakrishnan C - Blog</title>
   <style>
-    /* Animated binary (background) */
+    /* Animated binary background (matches portfolio) */
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
@@ -16,36 +16,40 @@
     }
     .binary-bg {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0; 
+      left: 0; 
+      right: 0; 
+      bottom: 0;
       pointer-events: none;
       z-index: -1;
-      opacity: 0.09;
-      font-size: 2.1em;
-      animation: scrollBin 14s linear infinite;
+      opacity: 0.1;
+      font-size: 2em;
+      animation: scrollBin 12s linear infinite;
       white-space: pre;
       font-family: monospace;
     }
     @keyframes scrollBin {
       0% {transform: translateY(0);}
-      100% {transform: translateY(-220px);}
+      100% {transform: translateY(-200px);}
     }
-
     header {
       text-align: center;
+      margin-bottom: 40px;
       background: #232e39;
-      padding: 32px 10px 24px;
+      padding: 36px 10px 20px;
       border-bottom: 2px solid #18d178;
-      box-shadow: 0 4px 24px rgba(24,209,120,0.06);
-      margin-bottom: 12px;
     }
     h1 {
-      font-size: 2.2em;
+      font-size: 2.5em;
       color: #18d178;
-      margin-bottom: 0.12em;
+      text-shadow: 0 2px 20px rgba(24, 209, 120, 0.4);
+      margin-bottom: 0.1em;
       margin-top: 0;
-      text-shadow: 0 2px 20px rgba(24, 209, 120, 0.25);
-      font-weight: 900;
-      letter-spacing: 2px;
+    }
+    h2 {
+      color: #18d178;
+      margin-top: 0;
+      font-size: 1.35em;
     }
     .back-link {
       background: #18d178;
@@ -56,84 +60,81 @@
       text-decoration: none !important;
       margin-top: 8px;
       display: inline-block;
-      box-shadow: 0 2px 6px rgba(24,209,120,.14);
-      transition: background 0.22s, color 0.19s;
+      margin-left: 6px;
+      box-shadow: 0 2px 6px rgba(24, 209, 120, 0.18);
       border: none;
+      transition: background 0.2s;
     }
-    .back-link:hover { background: #4ae6b3; color: #181d22 !important; }
+    .back-link:hover { background: #1cc785; color: #181d22 !important; }
 
-    main {
-      max-width: 860px;
-      margin: 36px auto 38px;
-      border-radius: 12px;
+    section {
+      max-width: 900px;
+      margin: 20px auto 30px auto;
       background: #21272c;
-      padding: 35px 32px 30px 32px;
-      box-shadow: 0 2px 22px rgba(24,209,120,0.12);
-    }
-    h2 {
-      color: #18d178;
-      font-size: 1.35em;
-      margin-bottom: 20px;
-      margin-top: 0;
-      text-shadow: 0 1px 10px rgba(24, 209, 120, 0.09);
-      font-weight: bold;
+      border-radius: 12px;
+      padding: 34px 26px;
+      box-shadow: 0 2px 22px rgba(24, 209, 120, 0.13);
     }
     ul {
       list-style-type: none;
       padding-left: 0;
     }
-    li {
+    ul li {
+      margin-bottom: 22px;
+      padding: 20px 20px 14px 20px;
       background: #181d22;
       border-radius: 10px;
-      margin-bottom: 24px;
-      padding: 25px 20px 20px 20px;
       border-left: 4px solid #18d178;
-      box-shadow: 0 1px 10px rgba(24,209,120,.06);
-      transition: box-shadow .25s, border-left .18s;
-      position: relative;
+      animation: slideIn 0.5s ease;
+      box-shadow: 0 1px 7px rgba(24,209,120,.04);
+      transition: box-shadow .2s, border-left .13s;
     }
-    li:hover {
+    ul li:hover {
       box-shadow: 0 3px 22px rgba(24,209,120,.10);
       border-left: 4px solid #4ae6b3;
-      top: -2px;
+      top: -1px;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(-20px); opacity: 0;}
+      to { transform: translateX(0); opacity: 1;}
     }
     .post-title { 
       color: #eee; 
       font-weight: bold; 
-      font-size: 1.27em;
-      margin-bottom: 7px;
+      font-size: 1.22em;
+      margin-bottom: 3px;
       text-decoration: none;
+      letter-spacing: 0.5px;
       transition: color 0.17s;
-      letter-spacing: 1px;
+      display: inline-block;
     }
     .post-title:hover { 
-      color: #4ae6b3;
+      color: #18d178;
       text-decoration: underline;
     }
     .date {
-      font-size: 1em;
+      font-size: 0.97em;
       color: #18d178;
-      margin-bottom: 16px;
+      margin-bottom: 6px;
       display: block;
       font-weight: 500;
       letter-spacing: 1px;
     }
     p {
-      font-size: 1.09em;
+      font-size: 1.08em;
       color: #ccc;
+      line-height: 1.6;
       margin-top: 0;
-      line-height: 1.7;
       margin-bottom: 0;
     }
     footer {
       text-align: center;
       color: #18d178;
-      margin-top: 34px;
-      font-size: 0.95em;
+      margin-top: 38px;
+      font-size: 0.96em;
       background: #181d22;
-      padding: 15px;
-      border-top: 2px solid rgba(24, 209, 120, 0.15);
-      box-shadow: 0 -2px 12px rgba(24,209,120,0.06);
+      padding: 16px;
+      border-top: 2px solid rgba(24, 209, 120, 0.2);
     }
   </style>
 </head>
@@ -149,7 +150,8 @@
   <h1>Blog</h1>
   <a href="index.html" class="back-link">&larr; Back to Portfolio</a>
 </header>
-<main>
+
+<section>
   <h2>Latest Posts</h2>
   <ul>
     <li>
@@ -159,7 +161,8 @@
     </li>
     <!-- Add more posts below as you write them -->
   </ul>
-</main>
+</section>
+
 <footer>
   &copy; 2025 Mohanakrishnan C. All Rights Reserved.
 </footer>
