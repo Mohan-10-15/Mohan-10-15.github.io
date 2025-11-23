@@ -4,9 +4,147 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mohanakrishnan C - Blog</title>
-  <!-- CSS here (same as previous example) -->
+  <style>
+    /* Animated binary (background) */
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: #101417;
+      color: #eee;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .binary-bg {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.09;
+      font-size: 2.1em;
+      animation: scrollBin 14s linear infinite;
+      white-space: pre;
+      font-family: monospace;
+    }
+    @keyframes scrollBin {
+      0% {transform: translateY(0);}
+      100% {transform: translateY(-220px);}
+    }
+
+    header {
+      text-align: center;
+      background: #232e39;
+      padding: 32px 10px 24px;
+      border-bottom: 2px solid #18d178;
+      box-shadow: 0 4px 24px rgba(24,209,120,0.06);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 2.2em;
+      color: #18d178;
+      margin-bottom: 0.12em;
+      margin-top: 0;
+      text-shadow: 0 2px 20px rgba(24, 209, 120, 0.25);
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+    .back-link {
+      background: #18d178;
+      color: #232e39 !important;
+      border-radius: 5px;
+      padding: 7px 18px;
+      font-weight: 600;
+      text-decoration: none !important;
+      margin-top: 8px;
+      display: inline-block;
+      box-shadow: 0 2px 6px rgba(24,209,120,.14);
+      transition: background 0.22s, color 0.19s;
+      border: none;
+    }
+    .back-link:hover { background: #4ae6b3; color: #181d22 !important; }
+
+    main {
+      max-width: 860px;
+      margin: 36px auto 38px;
+      border-radius: 12px;
+      background: #21272c;
+      padding: 35px 32px 30px 32px;
+      box-shadow: 0 2px 22px rgba(24,209,120,0.12);
+    }
+    h2 {
+      color: #18d178;
+      font-size: 1.35em;
+      margin-bottom: 20px;
+      margin-top: 0;
+      text-shadow: 0 1px 10px rgba(24, 209, 120, 0.09);
+      font-weight: bold;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    li {
+      background: #181d22;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      padding: 25px 20px 20px 20px;
+      border-left: 4px solid #18d178;
+      box-shadow: 0 1px 10px rgba(24,209,120,.06);
+      transition: box-shadow .25s, border-left .18s;
+      position: relative;
+    }
+    li:hover {
+      box-shadow: 0 3px 22px rgba(24,209,120,.10);
+      border-left: 4px solid #4ae6b3;
+      top: -2px;
+    }
+    .post-title { 
+      color: #eee; 
+      font-weight: bold; 
+      font-size: 1.27em;
+      margin-bottom: 7px;
+      text-decoration: none;
+      transition: color 0.17s;
+      letter-spacing: 1px;
+    }
+    .post-title:hover { 
+      color: #4ae6b3;
+      text-decoration: underline;
+    }
+    .date {
+      font-size: 1em;
+      color: #18d178;
+      margin-bottom: 16px;
+      display: block;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+    p {
+      font-size: 1.09em;
+      color: #ccc;
+      margin-top: 0;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    footer {
+      text-align: center;
+      color: #18d178;
+      margin-top: 34px;
+      font-size: 0.95em;
+      background: #181d22;
+      padding: 15px;
+      border-top: 2px solid rgba(24, 209, 120, 0.15);
+      box-shadow: 0 -2px 12px rgba(24,209,120,0.06);
+    }
+  </style>
 </head>
 <body>
+<div class="binary-bg">
+10100101 11001010 01101110 10101111 01100110 10110101 10011001 11001101 10101000
+01011010 01101001 11011011 10110111 01101001 10110100 10010010 11001001 10010110
+00101101 11001100 01101001 11010111 01101001 10111000 10001010 11100100 10111010
+10100101 11001010 01101110 10101111 01100110 10110101 10011001 11001101 10101000
+01011010 01101001 11011011 10110111 01101001 10110100 10010010 11001001 10010110
+</div>
 <header>
   <h1>Blog</h1>
   <a href="index.html" class="back-link">&larr; Back to Portfolio</a>
