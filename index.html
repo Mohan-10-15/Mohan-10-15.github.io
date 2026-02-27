@@ -4,8 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mohanakrishnan C - Cybersecurity Portfolio</title>
+
 <style>
-  /* Animated binary background (computer science vibe) */
   body {
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
@@ -14,12 +14,10 @@
     position: relative;
     overflow-x: hidden;
   }
+
   .binary-bg {
     position: fixed;
-    top: 0; 
-    left: 0; 
-    right: 0; 
-    bottom: 0;
+    inset: 0;
     pointer-events: none;
     z-index: -1;
     opacity: 0.1;
@@ -28,10 +26,12 @@
     white-space: pre;
     font-family: monospace;
   }
+
   @keyframes scrollBin {
     0% {transform: translateY(0);}
     100% {transform: translateY(-200px);}
   }
+
   header {
     text-align: center;
     margin-bottom: 40px;
@@ -39,110 +39,86 @@
     padding: 36px 10px 20px;
     border-bottom: 2px solid #18d178;
   }
+
   h1 {
     font-size: 2.5em;
     color: #18d178;
     text-shadow: 0 2px 20px rgba(24, 209, 120, 0.4);
-    margin-bottom: 0.1em;
-    margin-top: 0;
+    margin: 0;
   }
+
   h2 {
     color: #18d178;
-    margin-top: 0;
   }
+
   p, li {
     font-size: 1.08em;
     color: #ccc;
     line-height: 1.6;
   }
+
   section {
     max-width: 900px;
     margin: 20px auto;
-    margin-bottom: 30px;
     background: #21272c;
     border-radius: 12px;
     padding: 26px;
     box-shadow: 0 2px 22px rgba(24, 209, 120, 0.13);
   }
+
   .cyber-link {
     color: #18d178;
     text-decoration: none;
     font-weight: bold;
     margin-right: 16px;
   }
-  .cyber-link:hover { 
-    text-decoration: underline; 
+
+  .cyber-link:hover {
+    text-decoration: underline;
   }
-  .blog-link { /* added for Blog button style */
-    background: #18d178;
-    color: #232e39 !important;
-    border-radius: 5px;
-    padding: 7px 18px;
-    margin-left: 6px;
-    font-weight: 600;
-    transition: background 0.2s;
-    text-decoration: none !important;
-    box-shadow: 0 2px 6px rgba(24, 209, 120, 0.18);
-  }
-  .blog-link:hover { 
-    background: #1cc785;
-    text-decoration: underline; 
-  }
+
   ul {
-    list-style-type: none;
-    padding-left: 0;
+    list-style: none;
+    padding: 0;
   }
+
   ul li {
     margin-bottom: 16px;
-    padding: 12px;
+    padding: 14px;
     background: #181d22;
     border-radius: 8px;
     border-left: 4px solid #18d178;
-    animation: slideIn 0.5s ease;
   }
-  @keyframes slideIn {
-    from { transform: translateX(-20px); opacity: 0;}
-    to { transform: translateX(0); opacity: 1;}
-  }
+
   .status {
     display: inline-block;
     padding: 4px 10px;
     border-radius: 4px;
     font-size: 0.85em;
-    margin-top: 8px;
     font-weight: bold;
+    margin-top: 6px;
   }
-  .status-active {
+
+  .status-completed {
     background: #18d178;
     color: #101417;
   }
-  .status-planning {
-    background: #ff9500;
-    color: #101417;
-  }
-  .status-completed {
-    background: #4caf50;
-    color: #fff;
-  }
+
   footer {
     text-align: center;
     color: #18d178;
-    margin-top: 38px;
-    font-size: 0.96em;
+    margin-top: 40px;
     background: #181d22;
     padding: 16px;
-    border-top: 2px solid rgba(24, 209, 120, 0.2);
   }
 </style>
 </head>
+
 <body>
 
 <div class="binary-bg">
-10100101 11001010 01101110 10101111 01100110 10110101 10011001 11001101 10101000
-01011010 01101001 11011011 10110111 01101001 10110100 10010010 11001001 10010110
-00101101 11001100 01101001 11010111 01101001 10111000 10001010 11100100 10111010
-10100101 11001010 01101110 10101111 01100110 10110101 10011001 11001101 10101000
-01011010 01101001 11011011 10110111 01101001 10110100 10010010 11001001 10010110
+10100101 11001010 01101110 10101111 01100110 10110101
+01011010 01101001 11011011 10110111 01101001 10110100
 </div>
 
 <header>
@@ -151,82 +127,60 @@
   <div>
     <a href="https://www.linkedin.com/in/mohanakrishnan-c-374336378" class="cyber-link" target="_blank">LinkedIn</a>
     <a href="mailto:mohanakrishnan1510@gmail.com" class="cyber-link">Email</a>
-    <a href="blog.html" class="blog-link">Blog</a>
   </div>
 </header>
 
 <section>
   <h2>About Me</h2>
   <p>
-    Hello! I am <strong>Mohanakrishnan C</strong>, a passionate cybersecurity student pursuing my BE in Cybersecurity at SRM Valliammai College, Chennai.<br>
-    I love working on network security, Python, C/C++, ethical hacking, and tech projects. I hope to build a strong career in cybersecurity, combining knowledge and creativity.
+    I am <strong>Mohanakrishnan C</strong>, a passionate cybersecurity student pursuing BE in Cybersecurity at SRM Valliammai College, Chennai.
+    I enjoy working on network security, ethical hacking, and Python-based security tools.
   </p>
 </section>
 
 <section>
   <h2>Completed Projects</h2>
   <ul>
-    <li>
-      <strong>Password Strength Checker</strong><br>
-      <a href="https://github.com/Mohan-10-15/password-strength-checker" class="cyber-link" target="_blank">View on GitHub</a><br>
-      <span>A tool to analyze and rate password security, helping users create stronger passwords.</span><br>
-      <span class="status status-completed">✓ Completed</span>
-    </li>
-    <li>
-      <strong>File Encryptor</strong><br>
-      <a href="https://github.com/Mohan-10-15/file-encryptor" class="cyber-link" target="_blank">View on GitHub</a><br>
-      <span>A Python-based desktop tool to securely encrypt and decrypt files for data protection.</span><br>
-      <span class="status status-completed">✓ Completed</span>
-    </li>
-  </ul>
-</section>
 
-<section>
-  <h2>Currently Working On</h2>
-  <ul>
     <li>
       <strong>Network Packet Analyzer</strong><br>
-      <span>Building a Python-based tool to capture and analyze network packets for security monitoring and threat detection.</span><br>
-      <span class="status status-active">🔄 In Progress</span>
+      <a href="https://github.com/Mohan-10-15/NetworkPacketAnalyzer" class="cyber-link" target="_blank">
+        🔗 View on GitHub
+      </a><br>
+      <span>
+        A GUI-based Python application that captures live network packets, analyzes TCP/UDP/ICMP protocols,
+        detects abnormal traffic, and generates a final network analysis report.
+      </span><br>
+      <span class="status status-completed">✓ Completed</span>
     </li>
-    <li>
-      <strong>Keylogger Detection System</strong><br>
-      <span>Developing a system to detect and prevent keylogger attacks using behavioral analysis and system monitoring techniques.</span><br>
-      <span class="status status-active">🔄 In Progress</span>
-    </li>
-    <li>
-      <strong>Secure Password Manager</strong><br>
-      <span>Creating a desktop application with end-to-end encryption for secure password storage and management.</span><br>
-      <span class="status status-planning">📋 Planning</span>
-    </li>
-    <li>
-      <strong>Web Vulnerability Scanner</strong><br>
-      <span>Building an automated tool to identify common web vulnerabilities like SQL injection, XSS, and CSRF attacks.</span><br>
-      <span class="status status-planning">📋 Planning</span>
-    </li>
-  </ul>
-</section>
 
-<section>
-  <h2>Skills & Technologies</h2>
-  <ul>
     <li>
-      <strong>Programming Languages:</strong> Python, C/C++, JavaScript, Bash
+      <strong>Password Strength Checker</strong><br>
+      <a href="https://github.com/Mohan-10-15/password-strength-checker" class="cyber-link" target="_blank">
+        🔗 View on GitHub
+      </a><br>
+      <span>
+        A tool that evaluates password strength and helps users create secure passwords.
+      </span><br>
+      <span class="status status-completed">✓ Completed</span>
     </li>
+
     <li>
-      <strong>Cybersecurity:</strong> Network Security, Encryption, Ethical Hacking, Penetration Testing
+      <strong>File Encryptor</strong><br>
+      <a href="https://github.com/Mohan-10-15/file-encryptor" class="cyber-link" target="_blank">
+        🔗 View on GitHub
+      </a><br>
+      <span>
+        A Python-based desktop application for secure file encryption and decryption.
+      </span><br>
+      <span class="status status-completed">✓ Completed</span>
     </li>
-    <li>
-      <strong>Tools & Platforms:</strong> Git, GitHub, Linux, Wireshark, Burp Suite
-    </li>
-    <li>
-      <strong>Development:</strong> Web Development, Desktop Applications, Automation Scripts
-    </li>
+
   </ul>
 </section>
 
 <footer>
-  &copy; 2025 Mohanakrishnan C. Cybersecurity | Computer Science | Portfolio.
+  © 2025 Mohanakrishnan C | Cybersecurity Portfolio
 </footer>
 
 </body>
