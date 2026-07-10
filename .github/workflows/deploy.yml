@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
 permissions:
@@ -12,22 +13,18 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: github-pages
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -36,17 +33,46 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build portfolio
+      - name: Build Vite application
         run: npm run build
+
+      - name: Verify production build
+        shell: bash
+        run: |
+          echo "Checking dist directory..."
+
+          test -f dist/index.html
+
+          echo "Checking that Vite generated bundled assets..."
+
+          grep -q "/assets/" dist/index.html
+
+          echo "Checking that raw React source is not deployed..."
+
+          if grep -q "/src/main.jsx" dist/index.html; then
+            echo "ERROR: Raw React source was found in dist/index.html"
+            exit 1
+          fi
+
+          echo "Production build verification completed."
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload build
+      - name: Upload production build
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
-      - name: Deploy
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

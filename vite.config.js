@@ -4,6 +4,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
 
+  // The repository is Mohan-10-15.github.io,
+  // so the website is deployed at the root URL.
   base: "/",
 
   server: {
@@ -13,6 +15,7 @@ export default defineConfig({
 
   build: {
     outDir: "dist",
+    emptyOutDir: true,
     sourcemap: false
   }
 });
