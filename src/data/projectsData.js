@@ -1,9 +1,13 @@
 export const projectsData = [
   {
     slug: "threatguard-edr",
+
     name: "ThreatGuard EDR",
+
     category: "Endpoint Security",
+
     status: "Flagship Project",
+
     shortDescription:
       "An endpoint detection and response platform designed to monitor processes, identify suspicious activity and present threats through a professional security dashboard.",
 
@@ -15,7 +19,7 @@ export const projectsData = [
     screenshots: [
       "/projects/threatguard/dashboard.png",
       "/projects/threatguard/analytics.png",
-      "/projects/threatguard/threat-center.png"
+      "/projects/threatguard/threat_center.png"
     ],
 
     features: [
@@ -38,7 +42,7 @@ export const projectsData = [
     ],
 
     githubUrl:
-      "https://github.com/Mohan-10-15/Advanced-Keylogger-Detection-System",
+      "https://github.com/Mohan-10-15/ThreatGuard-EDR",
 
     highlights: [
       {
@@ -58,9 +62,13 @@ export const projectsData = [
 
   {
     slug: "network-packet-analyzer",
+
     name: "Network Packet Analyzer",
+
     category: "Network Security",
+
     status: "Flagship Project",
+
     shortDescription:
       "A network traffic analysis platform that captures packets, identifies suspicious behaviour and visualises threats through dashboards and security reports.",
 
@@ -72,8 +80,8 @@ export const projectsData = [
     screenshots: [
       "/projects/network-analyzer/dashboard.png",
       "/projects/network-analyzer/heatmap.png",
-      "/projects/network-analyzer/threat-feed.png",
-      "/projects/network-analyzer/threat-map.png",
+      "/projects/network-analyzer/threat_feed.png",
+      "/projects/network-analyzer/threat_map.png",
       "/projects/network-analyzer/timeline.png"
     ],
 
@@ -101,7 +109,7 @@ export const projectsData = [
     ],
 
     githubUrl:
-      "https://github.com/Mohan-10-15/NetworkPacketAnalyzer",
+      "https://github.com/Mohan-10-15/Network-Packet-Analyzer",
 
     highlights: [
       {
@@ -121,9 +129,13 @@ export const projectsData = [
 
   {
     slug: "securevault-enterprise",
+
     name: "SecureVault Enterprise",
+
     category: "Cryptography",
+
     status: "Flagship Project",
+
     shortDescription:
       "A secure file and folder encryption application with password protection, activity history and an enterprise-inspired user interface.",
 
