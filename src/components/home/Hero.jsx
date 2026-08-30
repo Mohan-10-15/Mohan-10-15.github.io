@@ -5,20 +5,16 @@ import {
   ArrowDown,
   ArrowRight,
   Download,
-  Github,
-  Linkedin,
-  Mail,
   MapPin,
   ShieldCheck
 } from "lucide-react";
 
 import AnimatedBackground from "../common/AnimatedBackground.jsx";
+import { getAssetPath } from "../../utils/getAssetPath.js";
 import { personalData } from "../../data/personalData.js";
 
 function Hero() {
   const heroRef = useRef(null);
-  const contentRef = useRef(null);
-  const panelRef = useRef(null);
 
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayedRole, setDisplayedRole] = useState("");
@@ -27,7 +23,7 @@ function Hero() {
   useEffect(() => {
     const role = personalData.roles[roleIndex];
 
-    const typingSpeed = deleting ? 45 : 75;
+    const typingSpeed = deleting ? 40 : 70;
 
     const timeout = window.setTimeout(() => {
       if (!deleting) {
@@ -37,7 +33,7 @@ function Hero() {
         if (nextText === role) {
           window.setTimeout(() => {
             setDeleting(true);
-          }, 1300);
+          }, 1400);
         }
       } else {
         const nextText = role.slice(0, displayedRole.length - 1);
@@ -69,16 +65,16 @@ function Hero() {
       timeline
         .from(".hero__eyebrow", {
           opacity: 0,
-          y: 20,
-          duration: 0.6
+          y: 18,
+          duration: 0.55
         })
         .from(
           ".hero__title-line",
           {
             opacity: 0,
-            y: 70,
-            duration: 0.9,
-            stagger: 0.12
+            y: 50,
+            duration: 0.85,
+            stagger: 0.1
           },
           "-=0.25"
         )
@@ -86,48 +82,49 @@ function Hero() {
           ".hero__role",
           {
             opacity: 0,
-            y: 24,
-            duration: 0.65
+            y: 20,
+            duration: 0.55
           },
-          "-=0.4"
+          "-=0.35"
         )
         .from(
           ".hero__description",
           {
             opacity: 0,
-            y: 24,
-            duration: 0.65
+            y: 20,
+            duration: 0.55
           },
-          "-=0.35"
+          "-=0.3"
         )
         .from(
           ".hero__actions > *",
           {
             opacity: 0,
-            y: 22,
-            duration: 0.55,
-            stagger: 0.1
-          },
-          "-=0.3"
-        )
-        .from(
-          ".hero__meta-item",
-          {
-            opacity: 0,
             y: 16,
-            duration: 0.45,
+            duration: 0.5,
             stagger: 0.08
           },
           "-=0.25"
         )
         .from(
-          panelRef.current,
+          ".hero__meta-item",
           {
             opacity: 0,
-            x: 70,
-            duration: 0.9
+            y: 14,
+            duration: 0.45,
+            stagger: 0.07
           },
-          "-=0.85"
+          "-=0.25"
+        )
+        .from(
+          ".hero__card *",
+          {
+            opacity: 0,
+            x: 50,
+            duration: 0.7,
+            stagger: 0.06
+          },
+          "-=0.7"
         );
     }, heroRef);
 
@@ -150,27 +147,25 @@ function Hero() {
     <section ref={heroRef} className="hero">
       <AnimatedBackground />
 
-      <div className="hero__vignette" />
-
       <div className="site-container hero__container">
-        <div ref={contentRef} className="hero__content">
+        <div className="hero__content">
           <div className="hero__eyebrow">
             <span className="hero__status-dot" />
-
-            <span>Available for cybersecurity internships</span>
+            <span>{personalData.availability.status}</span>
           </div>
 
           <h1 className="hero__title">
-            <span className="hero__title-line">Building Secure</span>
+            <span className="hero__title-line">
+              Building secure digital
+            </span>
 
             <span className="hero__title-line hero__title-line--accent">
-              Digital Systems
+              systems that matter.
             </span>
           </h1>
 
           <div className="hero__role">
             <span className="hero__role-prefix">I am a</span>
-
             <span className="hero__role-value">
               {displayedRole}
               <span className="hero__cursor">|</span>
@@ -182,9 +177,12 @@ function Hero() {
           </p>
 
           <div className="hero__actions">
-            <Link className="hero__button hero__button--primary" to="/projects">
-              <span>Explore Projects</span>
-              <ArrowRight size={18} />
+            <Link
+              className="hero__button hero__button--primary"
+              to="/projects"
+            >
+              View Projects
+              <ArrowRight size={17} />
             </Link>
 
             <a
@@ -193,8 +191,8 @@ function Hero() {
               target="_blank"
               rel="noreferrer"
             >
-              <Download size={18} />
-              <span>View Resume</span>
+              <Download size={17} />
+              View Resume
             </a>
           </div>
 
@@ -206,106 +204,48 @@ function Hero() {
 
             <div className="hero__meta-item">
               <ShieldCheck size={16} />
-              <span>Cybersecurity Student</span>
+              <span>B.E. Cyber Security</span>
             </div>
           </div>
         </div>
 
-        <aside ref={panelRef} className="hero__panel">
-          <div className="hero__panel-header">
-            <div className="hero__panel-window-controls">
-              <span />
-              <span />
-              <span />
+        <aside className="hero__card">
+          <div className="hero__card-image">
+            <img
+              src={getAssetPath(personalData.profileImage)}
+              alt={personalData.name}
+              onError={(event) => {
+                event.currentTarget.style.display = "none";
+                event.currentTarget
+                  .closest(".hero__card-image")
+                  ?.classList.add("hero__card-image--missing");
+              }}
+            />
+            <div className="hero__card-fallback">
+              <ShieldCheck size={40} />
+              <span>Profile photo</span>
             </div>
-
-            <span>security-profile.json</span>
           </div>
 
-          <div className="hero__panel-body">
-            <div className="hero__profile-badge">
-              <div className="hero__profile-icon">
-                <ShieldCheck size={30} />
+          <div className="hero__card-body">
+            <p className="hero__card-role">{personalData.title}</p>
+            <h2>{personalData.name}</h2>
+
+            <div className="hero__card-stats">
+              <div>
+                <strong>03</strong>
+                <span>Flagship Projects</span>
               </div>
 
               <div>
-                <p>Security Profile</p>
-                <h2>{personalData.name}</h2>
-              </div>
-            </div>
-
-            <div className="hero__terminal">
-              <p>
-                <span className="hero__terminal-key">role:</span>
-                <span className="hero__terminal-value">
-                  "{personalData.shortTitle}"
-                </span>
-              </p>
-
-              <p>
-                <span className="hero__terminal-key">location:</span>
-                <span className="hero__terminal-value">
-                  "Chennai, India"
-                </span>
-              </p>
-
-              <p>
-                <span className="hero__terminal-key">focus:</span>
-                <span className="hero__terminal-value">
-                  ["Security Architecture", "Network Analysis", "Encryption"]
-                </span>
-              </p>
-
-              <p>
-                <span className="hero__terminal-key">status:</span>
-                <span className="hero__terminal-success">
-                  "Open to Opportunities"
-                </span>
-              </p>
-            </div>
-
-            <div className="hero__panel-projects">
-              <div>
-                <span>03</span>
-                <p>Flagship Projects</p>
+                <strong>05</strong>
+                <span>Security Domains</span>
               </div>
 
               <div>
-                <span>100%</span>
-                <p>Security Focused</p>
+                <strong>02+</strong>
+                <span>Certifications</span>
               </div>
-
-              <div>
-                <span>24/7</span>
-                <p>Learning Mode</p>
-              </div>
-            </div>
-
-            <div className="hero__socials">
-              <a
-                href={personalData.socialLinks.github}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Open GitHub profile"
-              >
-                <Github size={19} />
-              </a>
-
-              <a
-                href={personalData.socialLinks.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Open LinkedIn profile"
-              >
-                <Linkedin size={19} />
-              </a>
-
-              <a
-                href={personalData.socialLinks.email}
-                aria-label="Send an email"
-              >
-                <Mail size={19} />
-              </a>
             </div>
           </div>
         </aside>
@@ -318,7 +258,7 @@ function Hero() {
         aria-label="Scroll to about section"
       >
         <span>Scroll to explore</span>
-        <ArrowDown size={18} />
+        <ArrowDown size={17} />
       </button>
     </section>
   );

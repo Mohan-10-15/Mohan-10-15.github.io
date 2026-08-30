@@ -29,17 +29,17 @@ function AnimatedBackground() {
 
     const createParticles = () => {
       const particleCount = Math.min(
-        100,
-        Math.max(35, Math.floor((width * height) / 18000))
+        70,
+        Math.max(25, Math.floor((width * height) / 24000))
       );
 
       particles = Array.from({ length: particleCount }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: Math.random() * 1.7 + 0.6,
-        velocityX: (Math.random() - 0.5) * 0.35,
-        velocityY: (Math.random() - 0.5) * 0.35,
-        opacity: Math.random() * 0.45 + 0.2
+        radius: Math.random() * 1.5 + 0.5,
+        velocityX: (Math.random() - 0.5) * 0.3,
+        velocityY: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.22 + 0.08
       }));
     };
 
@@ -69,30 +69,6 @@ function AnimatedBackground() {
       mouse.y = null;
     };
 
-    const drawGrid = () => {
-      const gridSize = 52;
-
-      context.save();
-      context.strokeStyle = "rgba(13, 148, 160, 0.035)";
-      context.lineWidth = 1;
-
-      for (let x = 0; x <= width; x += gridSize) {
-        context.beginPath();
-        context.moveTo(x, 0);
-        context.lineTo(x, height);
-        context.stroke();
-      }
-
-      for (let y = 0; y <= height; y += gridSize) {
-        context.beginPath();
-        context.moveTo(0, y);
-        context.lineTo(width, y);
-        context.stroke();
-      }
-
-      context.restore();
-    };
-
     const drawParticle = (particle) => {
       context.beginPath();
       context.arc(
@@ -103,7 +79,7 @@ function AnimatedBackground() {
         Math.PI * 2
       );
 
-      context.fillStyle = `rgba(13, 148, 160, ${particle.opacity})`;
+      context.fillStyle = `rgba(23, 28, 38, ${particle.opacity})`;
       context.fill();
     };
 
@@ -137,14 +113,14 @@ function AnimatedBackground() {
         if (distance < mouse.radius && distance > 0) {
           const force = (mouse.radius - distance) / mouse.radius;
 
-          particle.x += (distanceX / distance) * force * 0.7;
-          particle.y += (distanceY / distance) * force * 0.7;
+          particle.x += (distanceX / distance) * force * 0.5;
+          particle.y += (distanceY / distance) * force * 0.5;
         }
       }
     };
 
     const drawConnections = () => {
-      const connectionDistance = 125;
+      const connectionDistance = 120;
 
       for (let index = 0; index < particles.length; index += 1) {
         for (
@@ -164,14 +140,14 @@ function AnimatedBackground() {
 
           if (distance < connectionDistance) {
             const opacity =
-              (1 - distance / connectionDistance) * 0.16;
+              (1 - distance / connectionDistance) * 0.05;
 
             context.beginPath();
             context.moveTo(first.x, first.y);
             context.lineTo(second.x, second.y);
 
-            context.strokeStyle = `rgba(13, 148, 160, ${opacity})`;
-            context.lineWidth = 0.7;
+            context.strokeStyle = `rgba(23, 28, 38, ${opacity})`;
+            context.lineWidth = 0.6;
             context.stroke();
           }
         }
@@ -180,8 +156,6 @@ function AnimatedBackground() {
 
     const animate = () => {
       context.clearRect(0, 0, width, height);
-
-      drawGrid();
 
       particles.forEach((particle) => {
         updateParticle(particle);
@@ -212,12 +186,6 @@ function AnimatedBackground() {
   return (
     <div className="animated-background" aria-hidden="true">
       <canvas ref={canvasRef} className="animated-background__canvas" />
-
-      <div className="animated-background__orb animated-background__orb--one" />
-      <div className="animated-background__orb animated-background__orb--two" />
-
-      <div className="animated-background__scanline" />
-      <div className="animated-background__noise" />
     </div>
   );
 }
