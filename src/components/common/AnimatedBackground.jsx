@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+﻿import { useEffect, useRef } from "react";
 
 function AnimatedBackground() {
   const canvasRef = useRef(null);
@@ -73,7 +73,7 @@ function AnimatedBackground() {
       const gridSize = 52;
 
       context.save();
-      context.strokeStyle = "rgba(66, 217, 255, 0.035)";
+      context.strokeStyle = "rgba(13, 148, 160, 0.035)";
       context.lineWidth = 1;
 
       for (let x = 0; x <= width; x += gridSize) {
@@ -103,7 +103,7 @@ function AnimatedBackground() {
         Math.PI * 2
       );
 
-      context.fillStyle = `rgba(66, 217, 255, ${particle.opacity})`;
+      context.fillStyle = `rgba(13, 148, 160, ${particle.opacity})`;
       context.fill();
     };
 
@@ -170,7 +170,7 @@ function AnimatedBackground() {
             context.moveTo(first.x, first.y);
             context.lineTo(second.x, second.y);
 
-            context.strokeStyle = `rgba(66, 217, 255, ${opacity})`;
+            context.strokeStyle = `rgba(13, 148, 160, ${opacity})`;
             context.lineWidth = 0.7;
             context.stroke();
           }
