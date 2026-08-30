@@ -1,15 +1,23 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import {
+  ArrowUpRight,
   CalendarDays,
-  Camera,
-  FileText,
   MapPin,
   Presentation,
-  Trophy
+  Trophy,
+  Users
 } from "lucide-react";
 
 import { eventsData } from "../data/eventsData.js";
+
+const typeIcons = {
+  Workshop: Users,
+  Competition: Trophy,
+  Seminar: Presentation,
+  Conference: Presentation
+};
 
 function EventsPage() {
   const pageRef = useRef(null);
@@ -23,12 +31,28 @@ function EventsPage() {
         stagger: 0.1,
         ease: "power3.out"
       });
+
+      gsap.from(".event-report-card", {
+        opacity: 0,
+        y: 45,
+        duration: 0.75,
+        stagger: 0.1,
+        ease: "power3.out"
+      });
     }, pageRef);
 
     return () => {
       animationContext.revert();
     };
   }, []);
+
+  const completedEvents = eventsData.filter(
+    (event) => event.status === "Completed"
+  );
+
+  const upcomingEvents = eventsData.filter(
+    (event) => event.status === "Upcoming"
+  );
 
   return (
     <main ref={pageRef} className="events-page">
@@ -47,24 +71,24 @@ function EventsPage() {
           </h1>
 
           <p className="events-page__animate">
-            Detailed reports from technical events, workshops, conferences,
-            cybersecurity sessions and hands-on learning programmes.
+            Documented technical events, cybersecurity sessions and
+            hands-on learning programmes from my student journey.
           </p>
 
           <div className="events-page__stats events-page__animate">
             <div>
               <strong>{eventsData.length}</strong>
-              <span>Documented events</span>
+              <span>Recorded events</span>
             </div>
 
             <div>
-              <strong>04</strong>
-              <span>Report sections</span>
+              <strong>{completedEvents.length}</strong>
+              <span>Completed</span>
             </div>
 
             <div>
-              <strong>100%</strong>
-              <span>Learning focused</span>
+              <strong>{upcomingEvents.length}</strong>
+              <span>Upcoming</span>
             </div>
           </div>
         </div>
@@ -77,57 +101,64 @@ function EventsPage() {
             <h2>Technical participation</h2>
           </div>
 
-          {eventsData.length > 0 ? (
-            <div className="events-page__grid">
-              {eventsData.map((event) => (
-                <article key={event.slug} className="event-card">
-                  <p>{event.category}</p>
+          <div className="events-page__grid">
+            {eventsData.map((event) => {
+              const Icon = typeIcons[event.type] ?? Presentation;
+
+              return (
+                <Link
+                  key={event.slug}
+                  to={`/events/${event.slug}`}
+                  className={`event-report-card event-report-card--${event.status.toLowerCase()}`}
+                >
+                  <div className="event-report-card__top">
+                    <div className="event-report-card__icon">
+                      <Icon size={22} />
+                    </div>
+
+                    <span className="event-report-card__status">
+                      {event.status}
+                    </span>
+                  </div>
+
+                  <p className="event-report-card__type">
+                    {event.type}
+                  </p>
+
                   <h2>{event.title}</h2>
-                  <span>{event.description}</span>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <div className="content-empty-state">
-              <div className="content-empty-state__icon">
-                <CalendarDays size={38} />
-              </div>
 
-              <p className="content-empty-state__label">
-                EVENT REPORTS COMING SOON
-              </p>
+                  <p className="event-report-card__description">
+                    {event.description}
+                  </p>
 
-              <h2>Technical event documentation will appear here.</h2>
+                  <div className="event-report-card__meta">
+                    <span>
+                      <CalendarDays size={15} />
+                      {event.date}
+                    </span>
 
-              <p className="content-empty-state__description">
-                Future event reports will include the event overview,
-                technologies covered, key sessions, photographs, certificates
-                and my personal learning outcomes.
-              </p>
+                    <span>
+                      <MapPin size={15} />
+                      {event.mode}
+                    </span>
+                  </div>
 
-              <div className="content-empty-state__topics">
-                <div>
-                  <MapPin size={20} />
-                  <span>Event Details</span>
-                </div>
+                  <span className="event-report-card__link">
+                    View Report
+                    <ArrowUpRight size={16} />
+                  </span>
 
-                <div>
-                  <Camera size={20} />
-                  <span>Photo Gallery</span>
-                </div>
-
-                <div>
-                  <FileText size={20} />
-                  <span>Detailed Report</span>
-                </div>
-
-                <div>
-                  <Trophy size={20} />
-                  <span>Certificates</span>
-                </div>
-              </div>
-            </div>
-          )}
+                  <div className="event-report-card__skills">
+                    {event.skills.slice(0, 3).map((skill) => (
+                      <span key={`${event.slug}-${skill}`}>
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </section>
     </main>

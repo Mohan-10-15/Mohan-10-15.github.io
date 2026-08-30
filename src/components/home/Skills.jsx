@@ -13,9 +13,9 @@ import { skillsData } from "../../data/skillsData.js";
 gsap.registerPlugin(ScrollTrigger);
 
 const categoryIcons = {
-  Programming: Braces,
-  Cybersecurity: ShieldCheck,
-  "Frameworks and Tools": Wrench
+  code: Braces,
+  shield: ShieldCheck,
+  tools: Wrench
 };
 
 function Skills() {
@@ -48,6 +48,25 @@ function Skills() {
           once: true
         }
       });
+
+      gsap.utils.toArray(".skills__bar-fill").forEach((bar) => {
+        const level = bar.getAttribute("data-level");
+
+        gsap.fromTo(
+          bar,
+          { width: "0%" },
+          {
+            width: `${level}%`,
+            duration: 1.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: bar,
+              start: "top 90%",
+              once: true
+            }
+          }
+        );
+      });
     }, sectionRef);
 
     return () => {
@@ -75,25 +94,44 @@ function Skills() {
 
         <div className="skills__grid">
           {skillsData.map((group) => {
-            const Icon = categoryIcons[group.category] ?? ShieldCheck;
+            const Icon = categoryIcons[group.icon] ?? ShieldCheck;
 
             return (
               <article key={group.category} className="skills__card">
-                <div className="skills__card-icon">
-                  <Icon size={24} />
+                <div className="skills__card-header">
+                  <div className="skills__card-icon">
+                    <Icon size={24} />
+                  </div>
+
+                  <p className="skills__card-label">
+                    SKILL CATEGORY
+                  </p>
+
+                  <h3>{group.category}</h3>
                 </div>
 
-                <p className="skills__card-label">
-                  SKILL CATEGORY
+                <p className="skills__card-description">
+                  {group.description}
                 </p>
 
-                <h3>{group.category}</h3>
-
-                <div className="skills__list">
+                <div className="skills__bars">
                   {group.skills.map((skill) => (
-                    <span key={`${group.category}-${skill}`}>
-                      {skill}
-                    </span>
+                    <div
+                      key={`${group.category}-${skill.name}`}
+                      className="skills__bar"
+                    >
+                      <div className="skills__bar-label">
+                        <span>{skill.name}</span>
+                        <strong>{skill.level}%</strong>
+                      </div>
+
+                      <div className="skills__bar-track">
+                        <div
+                          className="skills__bar-fill"
+                          data-level={skill.level}
+                        />
+                      </div>
+                    </div>
                   ))}
                 </div>
               </article>

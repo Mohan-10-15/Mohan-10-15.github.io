@@ -1,14 +1,16 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import {
   ArrowRight,
+  ArrowUpRight,
   BookOpen,
-  Code2,
-  FileText,
-  Search
+  CalendarDays,
+  Clock3
 } from "lucide-react";
 
 import { blogData } from "../data/blogData.js";
+import { getAssetPath } from "../utils/getAssetPath.js";
 
 function BlogPage() {
   const pageRef = useRef(null);
@@ -22,12 +24,23 @@ function BlogPage() {
         stagger: 0.1,
         ease: "power3.out"
       });
+
+      gsap.from(".blog-article-card", {
+        opacity: 0,
+        y: 45,
+        duration: 0.75,
+        stagger: 0.1,
+        ease: "power3.out"
+      });
     }, pageRef);
 
     return () => {
       animationContext.revert();
     };
   }, []);
+
+  const featuredArticle = blogData[0];
+  const remainingArticles = blogData.slice(1);
 
   return (
     <main ref={pageRef} className="blog-page">
@@ -46,8 +59,8 @@ function BlogPage() {
           </h1>
 
           <p className="blog-page__animate">
-            A collection of technical articles, project development reports,
-            cybersecurity concepts and practical learning experiences.
+            Practical technical articles drawn from building endpoint,
+            network and cryptography security tools.
           </p>
 
           <div className="blog-page__stats blog-page__animate">
@@ -57,13 +70,22 @@ function BlogPage() {
             </div>
 
             <div>
-              <strong>03</strong>
-              <span>Planned categories</span>
+              <strong>
+                {new Set(blogData.map((article) => article.category)).size}
+              </strong>
+              <span>Security domains</span>
             </div>
 
             <div>
-              <strong>2026</strong>
-              <span>Writing journey</span>
+              <strong>
+                {blogData.reduce(
+                  (total, article) =>
+                    total +
+                    Number.parseInt(article.readTime, 10) || 0,
+                  0
+                )}
+              </strong>
+              <span>Minutes of reading</span>
             </div>
           </div>
         </div>
@@ -76,67 +98,114 @@ function BlogPage() {
               <p>LATEST WRITING</p>
               <h2>Technical articles</h2>
             </div>
-
-            <div className="blog-page__search">
-              <Search size={18} />
-              <input
-                type="text"
-                placeholder="Search articles"
-                aria-label="Search articles"
-                disabled
-              />
-            </div>
           </div>
 
-          {blogData.length > 0 ? (
+          {featuredArticle && (
+            <Link
+              to={`/blog/${featuredArticle.slug}`}
+              className="blog-featured-card"
+            >
+              <div className="blog-featured-card__image">
+                <img
+                  src={getAssetPath(featuredArticle.image)}
+                  alt={featuredArticle.title}
+                  onError={(event) => {
+                    event.currentTarget.style.display = "none";
+                  }}
+                />
+                <span className="blog-featured-card__badge">
+                  Featured
+                </span>
+              </div>
+
+              <div className="blog-featured-card__content">
+                <p className="blog-featured-card__category">
+                  {featuredArticle.category}
+                </p>
+
+                <h2>{featuredArticle.title}</h2>
+
+                <p className="blog-featured-card__excerpt">
+                  {featuredArticle.excerpt}
+                </p>
+
+                <div className="blog-featured-card__meta">
+                  <span>
+                    <CalendarDays size={15} />
+                    {featuredArticle.date}
+                  </span>
+
+                  <span>
+                    <Clock3 size={15} />
+                    {featuredArticle.readTime}
+                  </span>
+                </div>
+
+                <div className="blog-featured-card__footer">
+                  <div className="blog-featured-card__tags">
+                    {featuredArticle.tags.slice(0, 3).map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+
+                  <span className="blog-featured-card__link">
+                    Read Article
+                    <ArrowUpRight size={17} />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          )}
+
+          {remainingArticles.length > 0 && (
             <div className="blog-page__grid">
-              {blogData.map((article) => (
-                <article key={article.slug} className="blog-card">
-                  <p>{article.category}</p>
-                  <h2>{article.title}</h2>
-                  <span>{article.description}</span>
-                </article>
+              {remainingArticles.map((article) => (
+                <Link
+                  key={article.slug}
+                  to={`/blog/${article.slug}`}
+                  className="blog-article-card"
+                >
+                  <div className="blog-article-card__image">
+                    <img
+                      src={getAssetPath(article.image)}
+                      alt={article.title}
+                      loading="lazy"
+                      onError={(event) => {
+                        event.currentTarget.style.display = "none";
+                      }}
+                    />
+                  </div>
+
+                  <div className="blog-article-card__content">
+                    <p className="blog-article-card__category">
+                      {article.category}
+                    </p>
+
+                    <h3>{article.title}</h3>
+
+                    <p className="blog-article-card__excerpt">
+                      {article.excerpt}
+                    </p>
+
+                    <div className="blog-article-card__meta">
+                      <span>
+                        <CalendarDays size={14} />
+                        {article.date}
+                      </span>
+
+                      <span>
+                        <Clock3 size={14} />
+                        {article.readTime}
+                      </span>
+                    </div>
+
+                    <span className="blog-article-card__link">
+                      Read Article
+                      <ArrowRight size={16} />
+                    </span>
+                  </div>
+                </Link>
               ))}
-            </div>
-          ) : (
-            <div className="content-empty-state">
-              <div className="content-empty-state__icon">
-                <FileText size={38} />
-              </div>
-
-              <p className="content-empty-state__label">
-                ARTICLES IN PREPARATION
-              </p>
-
-              <h2>Technical articles are coming soon.</h2>
-
-              <p className="content-empty-state__description">
-                I am currently preparing detailed articles about my
-                cybersecurity projects, network analysis, endpoint security
-                and encryption development.
-              </p>
-
-              <div className="content-empty-state__topics">
-                <div>
-                  <Code2 size={20} />
-                  <span>Project Development</span>
-                </div>
-
-                <div>
-                  <BookOpen size={20} />
-                  <span>Cybersecurity Concepts</span>
-                </div>
-
-                <div>
-                  <FileText size={20} />
-                  <span>Learning Reports</span>
-                </div>
-              </div>
-
-              <a href="/projects">
-                Explore Projects
-                <ArrowRight size={17} />
-              </a>
             </div>
           )}
         </div>

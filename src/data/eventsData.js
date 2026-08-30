@@ -1,1 +1,59 @@
-export const eventsData = [];
+export const eventsData = [
+  {
+    slug: "cyber-security-awareness-workshop",
+    title: "Cyber Security Awareness Workshop",
+    type: "Workshop",
+    date: "15 January 2026",
+    time: "10:00 AM - 1:00 PM IST",
+    location: "SRM Valliammai Engineering College, Chennai",
+    mode: "On Campus",
+    status: "Completed",
+    description:
+      "An interactive workshop introducing students to core cybersecurity concepts, common attack vectors and practical security hygiene for everyday technology use.",
+    highlights: [
+      "Live phishing simulation demonstration",
+      "Password and authentication best practices",
+      "Practical demo of packet capture and analysis",
+      "Q&A session with hands-on exercises"
+    ],
+    skills: ["Security Awareness", "Phishing", "Network Fundamentals", "Best Practices"]
+  },
+  {
+    slug: "capture-the-flag-ctf-competition",
+    title: "Campus Capture The Flag Competition",
+    type: "Competition",
+    date: "22 February 2026",
+    time: "9:00 AM - 6:00 PM IST",
+    location: "SRM Valliammai Engineering College, Chennai",
+    mode: "On Campus",
+    status: "Completed",
+    description:
+      "A hands-on CTF competition covering cryptography, web exploitation, OSINT and network challenges designed to test practical security skills.",
+    highlights: [
+      "Solved cryptography and OSINT challenges",
+      "Applied packet analysis skills under time pressure",
+      "Collaborated with teammates on web exploitation tasks",
+      "Improved forensic and reverse-engineering approach"
+    ],
+    skills: ["CTF", "Cryptography", "OSINT", "Web Security", "Forensics"]
+  },
+  {
+    slug: "ethical-hacking-technical-session",
+    title: "Ethical Hacking Technical Session",
+    type: "Seminar",
+    date: "10 March 2026",
+    time: "11:00 AM - 12:30 PM IST",
+    location: "Online",
+    mode: "Online",
+    status: "Upcoming",
+    description:
+      "An online session exploring the methodologies, tools and responsible-use principles behind ethical hacking and penetration testing.",
+    highlights: [
+      "Introduction to penetration testing methodology",
+      "Reconnaissance and vulnerability scanning overview",
+      "Responsible disclosure and legal considerations",
+      "Roadmap for continuing security education"
+    ],
+    skills: ["Ethical Hacking", "Penetration Testing", "Reconnaissance", "Security Research"]
+  }
+];

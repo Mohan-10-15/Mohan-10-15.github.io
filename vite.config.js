@@ -16,6 +16,37 @@ export default defineConfig({
   build: {
     outDir: "dist",
     emptyOutDir: true,
-    sourcemap: false
+    sourcemap: false,
+    chunkSizeWarningLimit: 700,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            if (
+              id.includes("framer-motion") ||
+              id.includes("motion")
+            ) {
+              return "motion";
+            }
+
+            if (id.includes("gsap")) {
+              return "gsap";
+            }
+
+            if (id.includes("react")) {
+              return "react";
+            }
+
+            if (id.includes("lucide-react")) {
+              return "icons";
+            }
+
+            return "vendor";
+          }
+
+          return undefined;
+        }
+      }
+    }
   }
 });

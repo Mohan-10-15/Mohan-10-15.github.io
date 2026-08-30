@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { AnimatePresence } from "framer-motion";
 import {
   Navigate,
@@ -6,18 +7,47 @@ import {
   useLocation
 } from "react-router-dom";
 
+import PageLoader from "./components/common/PageLoader.jsx";
 import PageTransition from "./components/common/PageTransition.jsx";
 import PageLayout from "./components/layout/PageLayout.jsx";
 
-import BlogDetailsPage from "./pages/BlogDetailsPage.jsx";
-import BlogPage from "./pages/BlogPage.jsx";
-import CertificatesPage from "./pages/CertificatesPage.jsx";
-import EventDetailsPage from "./pages/EventDetailsPage.jsx";
-import EventsPage from "./pages/EventsPage.jsx";
-import HomePage from "./pages/HomePage.jsx";
-import NotFoundPage from "./pages/NotFoundPage.jsx";
-import ProjectDetailsPage from "./pages/ProjectDetailsPage.jsx";
-import ProjectsPage from "./pages/ProjectsPage.jsx";
+const BlogDetailsPage = lazy(() =>
+  import("./pages/BlogDetailsPage.jsx")
+);
+
+const BlogPage = lazy(() => import("./pages/BlogPage.jsx"));
+
+const CertificatesPage = lazy(() =>
+  import("./pages/CertificatesPage.jsx")
+);
+
+const EventDetailsPage = lazy(() =>
+  import("./pages/EventDetailsPage.jsx")
+);
+
+const EventsPage = lazy(() => import("./pages/EventsPage.jsx"));
+
+const HomePage = lazy(() => import("./pages/HomePage.jsx"));
+
+const NotFoundPage = lazy(() =>
+  import("./pages/NotFoundPage.jsx")
+);
+
+const ProjectDetailsPage = lazy(() =>
+  import("./pages/ProjectDetailsPage.jsx")
+);
+
+const ProjectsPage = lazy(() =>
+  import("./pages/ProjectsPage.jsx")
+);
+
+function RouteFallback() {
+  return (
+    <div className="route-fallback">
+      <PageLoader />
+    </div>
+  );
+}
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -25,7 +55,8 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait" initial={false}>
       <PageTransition key={location.pathname}>
-        <Routes location={location}>
+        <Suspense fallback={<RouteFallback />}>
+          <Routes location={location}>
           <Route path="/" element={<HomePage />} />
 
           <Route
@@ -72,7 +103,8 @@ function AnimatedRoutes() {
             path="*"
             element={<NotFoundPage />}
           />
-        </Routes>
+          </Routes>
+        </Suspense>
       </PageTransition>
     </AnimatePresence>
   );
