@@ -995,12 +995,12 @@ img {
     rgba(13, 148, 160, 0.15),
     rgba(75, 90, 166, 0.08)
   );
-  color: var(--primary);
+  color: #7ee6f2;
   box-shadow: inset 0 0 18px rgba(13, 148, 160, 0.05);
 }
 
 .hero__profile-badge p {
-  color: var(--text-secondary);
+  color: #8ea9bd;
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -1009,6 +1009,7 @@ img {
 
 .hero__profile-badge h2 {
   margin-top: 4px;
+  color: #eef4fb;
   font-family: "Space Grotesk", sans-serif;
   font-size: 1.25rem;
 }
@@ -1062,7 +1063,7 @@ img {
 
 .hero__panel-projects span {
   display: block;
-  color: var(--primary);
+  color: #7ee6f2;
   font-family: "Space Grotesk", sans-serif;
   font-size: 1.05rem;
   font-weight: 700;
@@ -1090,7 +1091,7 @@ img {
   border: 1px solid var(--border);
   border-radius: 11px;
   background: rgba(255, 255, 255, 0.025);
-  color: var(--text-secondary);
+  color: #a9c3d8;
   transition:
     transform 180ms ease,
     color 180ms ease,
@@ -1102,7 +1103,7 @@ img {
   transform: translateY(-3px);
   border-color: rgba(13, 148, 160, 0.26);
   background: rgba(13, 148, 160, 0.08);
-  color: var(--primary);
+  color: #7ee6f2;
 }
 
 .hero__scroll {
