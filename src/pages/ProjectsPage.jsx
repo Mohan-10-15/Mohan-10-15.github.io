@@ -3,9 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Github, ShieldCheck } from "lucide-react";
 
-import AnimatedBackground from "../components/common/AnimatedBackground.jsx";
-import ProjectCard from "../components/projects/ProjectCard.jsx";
-import { projectsData } from "../data/projectsData.js";
+import ProjectCard from "../components/projects/ProjectCard.jsx";import { projectsData } from "../data/projectsData.js";
 import { personalData } from "../data/personalData.js";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -46,8 +44,6 @@ function ProjectsPage() {
   return (
     <main ref={pageRef} className="projects-page">
       <section className="projects-page__hero">
-        <AnimatedBackground />
-
         <div className="projects-page__hero-overlay" />
 
         <div className="site-container projects-page__header">

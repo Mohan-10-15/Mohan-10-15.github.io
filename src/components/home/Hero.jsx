@@ -9,7 +9,6 @@ import {
   ShieldCheck
 } from "lucide-react";
 
-import AnimatedBackground from "../common/AnimatedBackground.jsx";
 import { getAssetPath } from "../../utils/getAssetPath.js";
 import { personalData } from "../../data/personalData.js";
 
@@ -145,8 +144,6 @@ function Hero() {
 
   return (
     <section ref={heroRef} className="hero">
-      <AnimatedBackground />
-
       <div className="site-container hero__container">
         <div className="hero__content">
           <div className="hero__eyebrow">
