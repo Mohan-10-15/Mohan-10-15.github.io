@@ -19,7 +19,7 @@ export const projectsData = [
     screenshots: [
       "/projects/threatguard/dashboard.png",
       "/projects/threatguard/analytics.png",
-      "/projects/threatguard/threat_center.png"
+      "/projects/threatguard/threat-center.png"
     ],
 
     features: [
@@ -80,8 +80,8 @@ export const projectsData = [
     screenshots: [
       "/projects/network-analyzer/dashboard.png",
       "/projects/network-analyzer/heatmap.png",
-      "/projects/network-analyzer/threat_feed.png",
-      "/projects/network-analyzer/threat_map.png",
+      "/projects/network-analyzer/threat-feed.png",
+      "/projects/network-analyzer/threat-map.png",
       "/projects/network-analyzer/timeline.png"
     ],
 

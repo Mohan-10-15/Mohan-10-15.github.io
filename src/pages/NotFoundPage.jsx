@@ -1,18 +1,22 @@
 import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 function NotFoundPage() {
   return (
-    <main className="page-center">
-      <p className="page-label">ERROR 404</p>
+    <div className="page-center">
+      <p className="not-found-label">Missed Route</p>
 
-      <h1>Page Not Found</h1>
+      <h1 className="not-found-title">
+        404 <span className="code">//</span>
+      </h1>
 
-      <p>The requested page does not exist.</p>
+      <p>This page does not exist.</p>
 
-      <Link className="page-button" to="/">
-        Return Home
+      <Link className="text-link" to="/">
+        <ArrowLeft size={15} />
+        Back to home
       </Link>
-    </main>
+    </div>
   );
 }
 

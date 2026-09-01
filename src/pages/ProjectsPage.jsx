@@ -1,113 +1,101 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Github, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 
-import ProjectCard from "../components/projects/ProjectCard.jsx";import { projectsData } from "../data/projectsData.js";
+import ProjectCard from "../components/projects/ProjectCard.jsx";
+import Reveal from "../components/common/Reveal.jsx";
+import { projectsData } from "../data/projectsData.js";
 import { personalData } from "../data/personalData.js";
 
-gsap.registerPlugin(ScrollTrigger);
-
 function ProjectsPage() {
-  const pageRef = useRef(null);
-
-  useEffect(() => {
-    const animationContext = gsap.context(() => {
-      gsap.from(".projects-page__header > *", {
-        opacity: 0,
-        y: 35,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: "power3.out"
-      });
-
-      gsap.utils.toArray(".project-card").forEach((card) => {
-        gsap.from(card, {
-          opacity: 0,
-          y: 60,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 88%",
-            once: true
-          }
-        });
-      });
-    }, pageRef);
-
-    return () => {
-      animationContext.revert();
-    };
-  }, []);
+  const categories = new Set(
+    projectsData.map((project) => project.category)
+  );
 
   return (
-    <main ref={pageRef} className="projects-page">
-      <section className="projects-page__hero">
-        <div className="projects-page__hero-overlay" />
+    <main className="secondary-page">
+      <header className="page-header">
+        <div className="site-container page-header__inner">
+          <Reveal>
+            <span className="eyebrow">
+              <span>
+                PROJECTS <span>/</span> SELECTED WORK
+              </span>
+            </span>
 
-        <div className="site-container projects-page__header">
-          <div className="projects-page__eyebrow">
-            <ShieldCheck size={16} />
-            <span>Security Engineering Portfolio</span>
-          </div>
+            <h1>
+              Security software built to solve <em>real problems.</em>
+            </h1>
 
-          <h1>
-            Cybersecurity projects built to solve
-            <span> real security problems.</span>
-          </h1>
+            <p className="page-header__tagline">
+              Flagship projects spanning endpoint detection, network
+              threat analysis and data encryption — each with real
+              screenshots and a case study.
+            </p>
+          </Reveal>
 
-          <p>
-            Explore my flagship projects covering endpoint detection,
-            network traffic analysis and secure data encryption.
-          </p>
+          <Reveal delay={1}>
+            <div className="page-header__stats">
+              <div>
+                <strong>{projectsData.length}</strong>
+                <span>Flagship projects</span>
+              </div>
 
-          <div className="projects-page__summary">
-            <div>
-              <strong>{projectsData.length}</strong>
-              <span>Flagship projects</span>
-            </div>
+              <div>
+                <strong>{categories.size}</strong>
+                <span>Security domains</span>
+              </div>
 
-            <div>
-              <strong>03</strong>
-              <span>Security domains</span>
-            </div>
-
-            <div>
-              <strong>100%</strong>
-              <span>Practical development</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="projects-page__directory">
-        <div className="site-container">
-          <div className="projects-page__section-heading">
-            <div>
-              <p>SELECTED WORK</p>
-              <h2>Flagship projects</h2>
+              <div>
+                <strong>100%</strong>
+                <span>Practical development</span>
+              </div>
             </div>
 
             <a
+              className="text-link"
               href={personalData.socialLinks.github}
               target="_blank"
               rel="noreferrer"
             >
-              <Github size={18} />
-              View all repositories
+              All repositories
+              <Github size={15} />
             </a>
-          </div>
+          </Reveal>
+        </div>
+      </header>
 
-          <div className="projects-page__grid">
+      <section className="page-body">
+        <div className="site-container">
+          <Reveal className="page-section-heading">
+            <div>
+              <p>Selected Work</p>
+              <h2>Flagship projects</h2>
+            </div>
+          </Reveal>
+
+          <div className="projects-grid">
             {projectsData.map((project, index) => (
-              <ProjectCard
+              <Reveal
+                as="div"
                 key={project.slug}
-                project={project}
-                index={index}
-              />
+                delay={index > 0 ? 1 : 0}
+              >
+                <ProjectCard project={project} index={index} />
+              </Reveal>
             ))}
           </div>
+
+          <Reveal>
+            <p className="page-cta">
+              Want to collaborate on a security project?{" "}
+              <a
+                className="text-link"
+                href="mailto:mohanakrishnan1510@gmail.com"
+              >
+                Get in touch
+                <ArrowUpRight size={15} />
+              </a>
+            </p>
+          </Reveal>
         </div>
       </section>
     </main>

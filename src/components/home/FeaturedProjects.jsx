@@ -1,140 +1,92 @@
-import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Github,
-  ShieldCheck
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, Github } from "lucide-react";
 
+import Reveal from "../common/Reveal.jsx";
 import { projectsData } from "../../data/projectsData.js";
 import { getAssetPath } from "../../utils/getAssetPath.js";
 
-gsap.registerPlugin(ScrollTrigger);
-
 function FeaturedProjects() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const animationContext = gsap.context(() => {
-      gsap.from(".featured-projects__heading > *", {
-        opacity: 0,
-        y: 35,
-        duration: 0.75,
-        stagger: 0.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          once: true
-        }
-      });
-
-      gsap.from(".featured-project-card", {
-        opacity: 0,
-        y: 50,
-        duration: 0.8,
-        stagger: 0.14,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".featured-projects__grid",
-          start: "top 82%",
-          once: true
-        }
-      });
-    }, sectionRef);
-
-    return () => {
-      animationContext.revert();
-    };
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
-      id="projects"
-      className="featured-projects"
-    >
+    <section id="projects" className="featured-projects">
       <div className="site-container">
-        <div className="featured-projects__heading">
-          <div>
-            <p>FEATURED SECURITY WORK</p>
+        <Reveal className="section-head">
+          <div className="page-section-heading">
+            <div>
+              <span className="eyebrow">
+                <span>
+                  03 <span>/</span> SELECTED WORK
+                </span>
+              </span>
 
-            <h2>
-              Practical cybersecurity
-              <span> projects.</span>
-            </h2>
+              <h2>
+                Featured <em>projects</em>
+              </h2>
+            </div>
+
+            <Link className="text-link" to="/projects">
+              View all projects
+              <ArrowRight size={16} />
+            </Link>
           </div>
-
-          <Link to="/projects">
-            View All Projects
-            <ArrowRight size={17} />
-          </Link>
-        </div>
+        </Reveal>
 
         <div className="featured-projects__grid">
           {projectsData.map((project, index) => (
-            <article
+            <Reveal
+              as="article"
               key={project.slug}
-              className="featured-project-card"
+              className="project-tile"
+              delay={1}
             >
-              <div className="featured-project-card__image">
+              <Link
+                to={`/projects/${project.slug}`}
+                className="project-tile__media"
+              >
+                <span className="project-tile__number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
                 <img
                   src={getAssetPath(project.image)}
                   alt={`${project.name} dashboard`}
                   loading="lazy"
                   onError={(event) => {
                     event.currentTarget.style.display = "none";
-
                     event.currentTarget
-                      .closest(".featured-project-card__image")
-                      ?.classList.add(
-                        "featured-project-card__image--missing"
-                      );
+                      .closest(".project-tile__media")
+                      ?.querySelector(".project-tile__fallback")
+                      ?.classList.add("is-visible");
                   }}
                 />
 
-                <div className="featured-project-card__fallback">
-                  <ShieldCheck size={44} />
-                  <span>Project preview</span>
+                <div className="project-tile__fallback">
+                  Project screenshot
                 </div>
+              </Link>
 
-                <div className="featured-project-card__overlay" />
-
-                <span className="featured-project-card__number">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
-                <span className="featured-project-card__status">
-                  {project.status}
-                </span>
-              </div>
-
-              <div className="featured-project-card__content">
-                <p className="featured-project-card__category">
+              <div className="project-tile__body">
+                <p className="project-tile__category">
                   {project.category}
                 </p>
 
                 <h3>{project.name}</h3>
 
-                <p className="featured-project-card__description">
+                <p className="project-tile__desc">
                   {project.shortDescription}
                 </p>
 
-                <div className="featured-project-card__technologies">
-                  {project.technologies.slice(0, 4).map((technology) => (
+                <div className="project-tile__tags">
+                  {project.technologies.slice(0, 3).map((technology) => (
                     <span key={`${project.slug}-${technology}`}>
                       {technology}
                     </span>
                   ))}
                 </div>
 
-                <div className="featured-project-card__actions">
+                <div className="project-tile__links">
                   <Link to={`/projects/${project.slug}`}>
-                    View Case Study
-                    <ArrowUpRight size={16} />
+                    Case study
+                    <ArrowUpRight size={15} />
                   </Link>
 
                   <a
@@ -143,11 +95,11 @@ function FeaturedProjects() {
                     rel="noreferrer"
                     aria-label={`Open ${project.name} GitHub repository`}
                   >
-                    <Github size={18} />
+                    <Github size={17} />
                   </a>
                 </div>
               </div>
-            </article>
+            </Reveal>
           ))}
         </div>
       </div>

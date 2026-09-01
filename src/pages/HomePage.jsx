@@ -1,22 +1,24 @@
 import About from "../components/home/About.jsx";
 import Contact from "../components/home/Contact.jsx";
-import Education from "../components/home/Education.jsx";
+import Credentials from "../components/home/Credentials.jsx";
 import FeaturedProjects from "../components/home/FeaturedProjects.jsx";
 import Hero from "../components/home/Hero.jsx";
-import ResumeSection from "../components/home/ResumeSection.jsx";
+import Journey from "../components/home/Journey.jsx";
+import Record from "../components/home/Record.jsx";
+import Resume from "../components/home/Resume.jsx";
 import Skills from "../components/home/Skills.jsx";
-import Stats from "../components/home/Stats.jsx";
 
 function HomePage() {
   return (
     <main>
       <Hero />
-      <Stats />
       <About />
       <Skills />
       <FeaturedProjects />
-      <Education />
-      <ResumeSection />
+      <Journey />
+      <Credentials />
+      <Resume />
+      <Record />
       <Contact />
     </main>
   );

@@ -1,165 +1,166 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
 import {
   ArrowUpRight,
-  Award,
+  BadgeCheck,
   CalendarDays,
-  CheckCircle2,
   FileBadge2,
-  Hash
+  Hash,
+  Sparkles
 } from "lucide-react";
 
+import Reveal from "../components/common/Reveal.jsx";
 import { certificatesData } from "../data/certificatesData.js";
 import { getAssetPath } from "../utils/getAssetPath.js";
 
 function CertificatesPage() {
-  const pageRef = useRef(null);
-
-  useEffect(() => {
-    const animationContext = gsap.context(() => {
-      gsap.from(".certificates-page__header > *", {
-        opacity: 0,
-        y: 35,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power3.out"
-      });
-
-      gsap.from(".certificate-card", {
-        opacity: 0,
-        y: 45,
-        duration: 0.75,
-        stagger: 0.12,
-        delay: 0.25,
-        ease: "power3.out"
-      });
-    }, pageRef);
-
-    return () => {
-      animationContext.revert();
-    };
-  }, []);
-
   return (
-    <main ref={pageRef} className="certificates-page">
-      <section className="certificates-page__hero">
-        <div className="certificates-page__grid-background" />
+    <main className="secondary-page">
+      <header className="page-header">
+        <div className="site-container page-header__inner">
+          <Reveal>
+            <span className="eyebrow">
+              <span>
+                CREDENTIALS <span>/</span> VERIFIED LEARNING
+              </span>
+            </span>
 
-        <div className="site-container certificates-page__header">
-          <div className="certificates-page__eyebrow">
-            <Award size={16} />
-            <span>Verified Learning</span>
-          </div>
+            <h1>
+              Verified credentials across <em>security &amp; cloud.</em>
+            </h1>
 
-          <h1>
-            Certifications and
-            <span> professional learning.</span>
-          </h1>
+            <p className="page-header__tagline">
+              Learning milestones recorded through certification
+              programmes in cybersecurity and cloud computing.
+            </p>
+          </Reveal>
 
-          <p>
-            A collection of certifications completed as part of my
-            cybersecurity, cloud computing and technical learning journey.
-          </p>
+          <Reveal delay={1}>
+            <div className="page-header__stats">
+              <div>
+                <strong>{certificatesData.length}</strong>
+                <span>Certifications</span>
+              </div>
 
-          <div className="certificates-page__stats">
-            <div>
-              <strong>{certificatesData.length}</strong>
-              <span>Certificates completed</span>
+              <div>
+                <strong>
+                  {
+                    new Set(
+                      certificatesData.map(
+                        (certificate) => certificate.issuer
+                      )
+                    ).size
+                  }
+                </strong>
+                <span>Issuers</span>
+              </div>
+
+              <div>
+                <strong>100%</strong>
+                <span>Verified</span>
+              </div>
             </div>
-
-            <div>
-              <strong>02</strong>
-              <span>Technical domains</span>
-            </div>
-
-            <div>
-              <strong>2026</strong>
-              <span>Latest completion year</span>
-            </div>
-          </div>
+          </Reveal>
         </div>
-      </section>
+      </header>
 
-      <section className="certificates-page__content">
+      <section className="page-body">
         <div className="site-container">
-          <div className="certificates-page__section-heading">
-            <p>CREDENTIALS</p>
-            <h2>Completed certifications</h2>
-          </div>
+          <Reveal className="page-section-heading">
+            <div>
+              <p>Verified Credentials</p>
+              <h2>Certifications</h2>
+            </div>
+          </Reveal>
 
-          <div className="certificates-page__list">
-            {certificatesData.map((certificate) => (
-              <article
+          <div className="certificates-list">
+            {certificatesData.map((certificate, index) => (
+              <Reveal
+                as="article"
                 key={certificate.id}
-                className="certificate-card"
+                delay={index > 0 ? 1 : 0}
               >
-                <div className="certificate-card__icon">
-                  <FileBadge2 size={32} />
-                </div>
-
-                <div className="certificate-card__content">
-                  <div className="certificate-card__top">
-                    <div>
-                      <p className="certificate-card__category">
-                        {certificate.category}
-                      </p>
-
-                      <h2>{certificate.title}</h2>
-
-                      <p className="certificate-card__issuer">
-                        Issued by {certificate.issuer}
-                      </p>
-                    </div>
-
-                    <span className="certificate-card__verified">
-                      <CheckCircle2 size={15} />
-                      Verified
-                    </span>
-                  </div>
-
-                  <p className="certificate-card__description">
-                    {certificate.description}
-                  </p>
-
-                  <div className="certificate-card__details">
-                    <div>
-                      <CalendarDays size={16} />
-
-                      <span>
-                        <small>Completed</small>
-                        {certificate.date}
-                      </span>
-                    </div>
-
-                    <div>
-                      <Hash size={16} />
-
-                      <span>
-                        <small>Certificate code</small>
-                        {certificate.certificateCode}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="certificate-card__skills">
-                    {certificate.skills.map((skill) => (
-                      <span key={`${certificate.id}-${skill}`}>
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-
+                <div className="certificate-card">
                   <a
-                    className="certificate-card__button"
+                    className="certificate-card__doc"
                     href={getAssetPath(certificate.file)}
                     target="_blank"
                     rel="noreferrer"
+                    aria-label={`Open ${certificate.title} certificate`}
                   >
-                    View Certificate
-                    <ArrowUpRight size={17} />
+                    <FileBadge2 size={46} />
+                    <p>Certificate · #{certificate.certificateCode}</p>
+                    <h2>{certificate.issuer}</h2>
                   </a>
+
+                  <div className="certificate-card__content">
+                    <div className="certificate-card__top">
+                      <div>
+                        <p className="certificate-card__category">
+                          {certificate.category}
+                        </p>
+
+                        <h2>{certificate.title}</h2>
+
+                        <p className="certificate-card__issuer">
+                          Issued by {certificate.issuer}
+                        </p>
+                      </div>
+
+                      <span className="certificate-card__verified">
+                        <BadgeCheck size={14} />
+                        Verified
+                      </span>
+                    </div>
+
+                    <p className="certificate-card__description">
+                      {certificate.description}
+                    </p>
+
+                    <div className="certificate-card__details">
+                      <div>
+                        <CalendarDays size={15} />
+                        <span>
+                          <small>Date earned</small>
+                          {certificate.date}
+                        </span>
+                      </div>
+
+                      <div>
+                        <Hash size={15} />
+                        <span>
+                          <small>Code</small>
+                          {certificate.certificateCode}
+                        </span>
+                      </div>
+
+                      <div>
+                        <Sparkles size={15} />
+                        <span>
+                          <small>Focus</small>
+                          {certificate.category}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="certificate-card__skills">
+                      {certificate.skills.map((skill) => (
+                        <span key={`${certificate.id}-${skill}`}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+
+                    <a
+                      className="btn--dark certificate-card__button"
+                      href={getAssetPath(certificate.file)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View Credential
+                      <ArrowUpRight size={16} />
+                    </a>
+                  </div>
                 </div>
-              </article>
+              </Reveal>
             ))}
           </div>
         </div>

@@ -1,161 +1,135 @@
-import { useEffect, useRef } from "react";
+import { ArrowRight, CalendarDays, MapPin, Clock3 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { gsap } from "gsap";
-import {
-  ArrowUpRight,
-  CalendarDays,
-  MapPin,
-  Presentation,
-  Trophy,
-  Users
-} from "lucide-react";
 
+import Reveal from "../components/common/Reveal.jsx";
 import { eventsData } from "../data/eventsData.js";
 
-const typeIcons = {
-  Workshop: Users,
-  Competition: Trophy,
-  Seminar: Presentation,
-  Conference: Presentation
+const eventIcon = {
+  Workshop: CalendarDays,
+  Competition: Clock3,
+  Seminar: MapPin
 };
 
 function EventsPage() {
-  const pageRef = useRef(null);
-
-  useEffect(() => {
-    const animationContext = gsap.context(() => {
-      gsap.from(".events-page__animate", {
-        opacity: 0,
-        y: 35,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power3.out"
-      });
-
-      gsap.from(".event-report-card", {
-        opacity: 0,
-        y: 45,
-        duration: 0.75,
-        stagger: 0.1,
-        ease: "power3.out"
-      });
-    }, pageRef);
-
-    return () => {
-      animationContext.revert();
-    };
-  }, []);
-
-  const completedEvents = eventsData.filter(
-    (event) => event.status === "Completed"
-  );
-
-  const upcomingEvents = eventsData.filter(
-    (event) => event.status === "Upcoming"
+  const statusCounts = eventsData.reduce(
+    (counts, event) => {
+      counts[event.status] = (counts[event.status] || 0) + 1;
+      return counts;
+    },
+    {}
   );
 
   return (
-    <main ref={pageRef} className="events-page">
-      <section className="events-page__hero">
-        <div className="events-page__grid-background" />
+    <main className="secondary-page">
+      <header className="page-header">
+        <div className="site-container page-header__inner">
+          <Reveal>
+            <span className="eyebrow">
+              <span>
+                EVENTS <span>/</span> LIVE RECORD
+              </span>
+            </span>
 
-        <div className="site-container events-page__header">
-          <div className="events-page__eyebrow events-page__animate">
-            <Presentation size={16} />
-            <span>Technical Participation</span>
-          </div>
+            <h1>
+              Workshops and sessions where I <em>learned live.</em>
+            </h1>
 
-          <h1 className="events-page__animate">
-            Workshops, seminars and
-            <span> technical experiences.</span>
-          </h1>
+            <p className="page-header__tagline">
+              Cyber security workshops, CTF competitions and technical
+              sessions I have attended and participated in.
+            </p>
+          </Reveal>
 
-          <p className="events-page__animate">
-            Documented technical events, cybersecurity sessions and
-            hands-on learning programmes from my student journey.
-          </p>
+          <Reveal delay={1}>
+            <div className="page-header__stats">
+              <div>
+                <strong>{eventsData.length}</strong>
+                <span>Total events</span>
+              </div>
 
-          <div className="events-page__stats events-page__animate">
-            <div>
-              <strong>{eventsData.length}</strong>
-              <span>Recorded events</span>
+              <div>
+                <strong>{statusCounts.Completed || 0}</strong>
+                <span>Completed</span>
+              </div>
+
+              <div>
+                <strong>{statusCounts.Upcoming || 0}</strong>
+                <span>Upcoming</span>
+              </div>
             </div>
-
-            <div>
-              <strong>{completedEvents.length}</strong>
-              <span>Completed</span>
-            </div>
-
-            <div>
-              <strong>{upcomingEvents.length}</strong>
-              <span>Upcoming</span>
-            </div>
-          </div>
+          </Reveal>
         </div>
-      </section>
+      </header>
 
-      <section className="events-page__content">
+      <section className="page-body">
         <div className="site-container">
-          <div className="events-page__section-heading">
-            <p>EVENT REPORTS</p>
-            <h2>Technical participation</h2>
-          </div>
+          <Reveal className="page-section-heading">
+            <div>
+              <p>Live Record</p>
+              <h2>Events &amp; sessions</h2>
+            </div>
+          </Reveal>
 
-          <div className="events-page__grid">
-            {eventsData.map((event) => {
-              const Icon = typeIcons[event.type] ?? Presentation;
+          <div className="events-grid">
+            {eventsData.map((event, index) => {
+              const Icon = eventIcon[event.type] || CalendarDays;
 
               return (
-                <Link
+                <Reveal
+                  as="article"
                   key={event.slug}
-                  to={`/events/${event.slug}`}
-                  className={`event-report-card event-report-card--${event.status.toLowerCase()}`}
+                  delay={index > 0 ? 1 : 0}
                 >
-                  <div className="event-report-card__top">
-                    <div className="event-report-card__icon">
-                      <Icon size={22} />
+                  <Link
+                    to={`/events/${event.slug}`}
+                    className="event-report-card"
+                  >
+                    <div className="event-report-card__top">
+                      <span className="event-report-card__icon">
+                        <Icon size={18} />
+                      </span>
+
+                      <span className="event-report-card__status">
+                        {event.status}
+                      </span>
                     </div>
 
-                    <span className="event-report-card__status">
-                      {event.status}
-                    </span>
-                  </div>
+                    <p className="event-report-card__type">
+                      {event.type} · {event.mode}
+                    </p>
 
-                  <p className="event-report-card__type">
-                    {event.type}
-                  </p>
+                    <h2>{event.title}</h2>
 
-                  <h2>{event.title}</h2>
+                    <p className="event-report-card__description">
+                      {event.description}
+                    </p>
 
-                  <p className="event-report-card__description">
-                    {event.description}
-                  </p>
-
-                  <div className="event-report-card__meta">
-                    <span>
-                      <CalendarDays size={15} />
-                      {event.date}
-                    </span>
-
-                    <span>
-                      <MapPin size={15} />
-                      {event.mode}
-                    </span>
-                  </div>
-
-                  <span className="event-report-card__link">
-                    View Report
-                    <ArrowUpRight size={16} />
-                  </span>
-
-                  <div className="event-report-card__skills">
-                    {event.skills.slice(0, 3).map((skill) => (
-                      <span key={`${event.slug}-${skill}`}>
-                        {skill}
+                    <div className="event-report-card__meta">
+                      <span>
+                        <CalendarDays size={14} />
+                        {event.date}
                       </span>
-                    ))}
-                  </div>
-                </Link>
+
+                      <span>
+                        <MapPin size={14} />
+                        {event.location}
+                      </span>
+                    </div>
+
+                    <div className="event-report-card__skills">
+                      {event.skills.slice(0, 3).map((skill) => (
+                        <span key={`${event.slug}-${skill}`}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+
+                    <span className="event-report-card__link">
+                      View session
+                      <ArrowRight size={16} />
+                    </span>
+                  </Link>
+                </Reveal>
               );
             })}
           </div>

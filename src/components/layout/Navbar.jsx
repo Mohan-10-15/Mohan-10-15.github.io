@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import {
+  ArrowUpRight,
   Github,
   Linkedin,
   Mail,
   Menu,
-  ShieldCheck,
   X
 } from "lucide-react";
 
 import { personalData } from "../../data/personalData.js";
+import { getAssetPath } from "../../utils/getAssetPath.js";
 
 const navItems = [
-  { label: "Home", path: "/" },
-  { label: "Projects", path: "/projects" },
-  { label: "Blog", path: "/blog" },
-  { label: "Events", path: "/events" },
-  { label: "Certifications", path: "/certifications" }
+  { label: "Home", suffix: "01", path: "/" },
+  { label: "Projects", suffix: "02", path: "/projects" },
+  { label: "Journal", suffix: "03", path: "/blog" },
+  { label: "Events", suffix: "04", path: "/events" },
+  { label: "Credentials", suffix: "05", path: "/certifications" }
 ];
 
 function Navbar() {
@@ -26,11 +27,13 @@ function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 24);
     };
 
     handleScroll();
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, {
+      passive: true
+    });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -50,91 +53,37 @@ function Navbar() {
   }, [menuOpen]);
 
   return (
-    <header className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
+    <header
+      className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}
+    >
       <div className="navbar__inner">
-        <Link className="navbar__brand" to="/" aria-label="Go to home page">
-          <span className="navbar__brand-icon">
-            <ShieldCheck size={22} strokeWidth={2.2} />
-          </span>
-
-          <span className="navbar__brand-text">
-            <strong>Mohanakrishnan</strong>
-            <small>Cyber Security</small>
-          </span>
+        <Link className="navbar__brand" to="/" aria-label="Go to home">
+          <span className="navbar__brand-mark">MC</span>
+          <strong>Mohanakrishnan C</strong>
         </Link>
 
-        <nav
-          className={`navbar__menu ${menuOpen ? "navbar__menu--open" : ""}`}
-          aria-label="Main navigation"
-        >
-          <div className="navbar__mobile-header">
-            <span>Navigation</span>
-
-            <button
-              type="button"
-              className="navbar__close"
-              onClick={() => setMenuOpen(false)}
-              aria-label="Close navigation menu"
+        <nav className="navbar__links" aria-label="Main navigation">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.path === "/"}
+              className={({ isActive }) =>
+                `navbar__link ${
+                  isActive ? "navbar__link--active" : ""
+                }`
+              }
             >
-              <X size={22} />
-            </button>
-          </div>
-
-          <div className="navbar__links">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                end={item.path === "/"}
-                className={({ isActive }) =>
-                  `navbar__link ${isActive ? "navbar__link--active" : ""}`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </div>
-
-          <div className="navbar__mobile-socials">
-            <a
-              href={personalData.socialLinks.github}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Open GitHub profile"
-            >
-              <Github size={20} />
-            </a>
-
-            <a
-              href={personalData.socialLinks.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Open LinkedIn profile"
-            >
-              <Linkedin size={20} />
-            </a>
-
-            <a
-              href={personalData.socialLinks.email}
-              aria-label="Send email"
-            >
-              <Mail size={20} />
-            </a>
-          </div>
+              {item.label}
+            </NavLink>
+          ))}
         </nav>
 
         <div className="navbar__actions">
           <a
-            className="navbar__github"
-            href={personalData.socialLinks.github}
-            target="_blank"
-            rel="noreferrer"
+            className="navbar__cta"
+            href={personalData.socialLinks.email}
           >
-            <Github size={18} />
-            <span>GitHub</span>
-          </a>
-
-          <a className="navbar__contact" href={personalData.socialLinks.email}>
             Contact
           </a>
 
@@ -145,18 +94,73 @@ function Navbar() {
             aria-label="Open navigation menu"
             aria-expanded={menuOpen}
           >
-            <Menu size={23} />
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
       {menuOpen && (
-        <button
-          type="button"
-          className="navbar__overlay"
-          onClick={() => setMenuOpen(false)}
-          aria-label="Close navigation menu"
-        />
+        <div className="navbar__mobile">
+          <button
+            type="button"
+            className="navbar__mobile-close"
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close navigation menu"
+          >
+            <X size={21} />
+          </button>
+
+          <div className="navbar__mobile-links">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                end={item.path === "/"}
+                className="navbar__mobile-link"
+                onClick={() => setMenuOpen(false)}
+              >
+                <span>{item.label}</span>
+                <span>{item.suffix}</span>
+              </NavLink>
+            ))}
+          </div>
+
+          <div className="contact__socials" style={{ marginTop: "34px" }}>
+            <a
+              href={personalData.socialLinks.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open GitHub profile"
+            >
+              <Github size={19} />
+            </a>
+
+            <a
+              href={personalData.socialLinks.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open LinkedIn profile"
+            >
+              <Linkedin size={19} />
+            </a>
+
+            <a
+              href={personalData.socialLinks.email}
+              aria-label="Send email"
+            >
+              <Mail size={19} />
+            </a>
+
+            <a
+              href={getAssetPath(personalData.resumeFile)}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open resume"
+            >
+              <ArrowUpRight size={19} />
+            </a>
+          </div>
+        </div>
       )}
     </header>
   );

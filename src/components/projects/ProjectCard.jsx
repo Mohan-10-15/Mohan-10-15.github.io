@@ -1,4 +1,4 @@
-import { ArrowUpRight, Github, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { getAssetPath } from "../../utils/getAssetPath.js";
@@ -8,54 +8,31 @@ function ProjectCard({ project, index }) {
 
   return (
     <article className="project-card">
-      <div className="project-card__image-wrapper">
+      <div className="project-card__image">
+        <span className="project-card__number">{projectNumber}</span>
+
         <img
-          className="project-card__image"
           src={getAssetPath(project.image)}
           alt={`${project.name} dashboard`}
           loading="lazy"
           onError={(event) => {
             event.currentTarget.style.display = "none";
             event.currentTarget
-              .closest(".project-card__image-wrapper")
-              ?.classList.add("project-card__image-wrapper--missing");
+              .closest(".project-card__image")
+              ?.querySelector(".project-card__image-fallback")
+              ?.classList.add("is-visible");
           }}
         />
 
         <div className="project-card__image-fallback">
-          <ShieldCheck size={42} />
-          <span>Project screenshot</span>
+          Project screenshot
         </div>
-
-        <div className="project-card__image-overlay" />
-
-        <span className="project-card__number">
-          {projectNumber}
-        </span>
-
-        <span className="project-card__status">
-          {project.status}
-        </span>
       </div>
 
       <div className="project-card__content">
-        <div className="project-card__heading">
-          <div>
-            <p className="project-card__category">
-              {project.category}
-            </p>
+        <p className="project-card__category">{project.category}</p>
 
-            <h2>{project.name}</h2>
-          </div>
-
-          <Link
-            className="project-card__open"
-            to={`/projects/${project.slug}`}
-            aria-label={`View ${project.name} project`}
-          >
-            <ArrowUpRight size={20} />
-          </Link>
-        </div>
+        <h2>{project.name}</h2>
 
         <p className="project-card__description">
           {project.shortDescription}
@@ -63,10 +40,7 @@ function ProjectCard({ project, index }) {
 
         <div className="project-card__highlights">
           {project.highlights.map((highlight) => (
-            <div
-              key={`${project.slug}-${highlight.label}`}
-              className="project-card__highlight"
-            >
+            <div key={`${project.slug}-${highlight.label}`}>
               <span>{highlight.label}</span>
               <strong>{highlight.value}</strong>
             </div>

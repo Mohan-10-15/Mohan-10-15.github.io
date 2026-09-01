@@ -1,21 +1,19 @@
-import { useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import { gsap } from "gsap";
 import {
   ArrowLeft,
   ArrowRight,
   BookOpen,
   CalendarDays,
   Clock3,
-  FileText,
   FolderGit2,
   Tag
 } from "lucide-react";
 
+import Reveal from "../components/common/Reveal.jsx";
 import { blogData } from "../data/blogData.js";
 import { getAssetPath } from "../utils/getAssetPath.js";
 
-const categoryIcons = {
+const categoryIcon = {
   "Endpoint Security": FolderGit2,
   "Network Security": FolderGit2,
   Cryptography: FolderGit2
@@ -23,183 +21,201 @@ const categoryIcons = {
 
 function BlogDetailsPage() {
   const { articleSlug } = useParams();
-  const pageRef = useRef(null);
 
   const article = blogData.find(
     (currentArticle) => currentArticle.slug === articleSlug
   );
 
-  useEffect(() => {
-    if (!article) {
-      return undefined;
-    }
-
-    const animationContext = gsap.context(() => {
-      gsap.from(".blog-details__animate", {
-        opacity: 0,
-        y: 30,
-        duration: 0.7,
-        stagger: 0.08,
-        ease: "power3.out"
-      });
-    }, pageRef);
-
-    return () => {
-      animationContext.revert();
-    };
-  }, [article]);
-
   if (!article) {
     return (
-      <main className="blog-details blog-details--missing">
-        <div className="site-container blog-details__missing-content">
-          <FileText size={42} />
-          <p>ARTICLE NOT AVAILABLE</p>
-          <h1>{articleSlug.replaceAll("-", " ")}</h1>
-          <span>
-            This technical article has not been published yet.
-          </span>
-          <Link to="/blog">
-            <ArrowLeft size={17} />
-            Return to Blog
-          </Link>
+      <main className="secondary-page">
+        <div className="site-container">
+          <div className="detail-hero">
+            <Link className="back-link" to="/blog">
+              <ArrowLeft size={16} />
+              Back to Blog
+            </Link>
+
+            <p className="detail-kicker">Article Unavailable</p>
+            <h1>{articleSlug.replaceAll("-", " ")}</h1>
+            <p className="detail-hero__description">
+              This technical article has not been published yet.
+            </p>
+          </div>
         </div>
       </main>
     );
   }
 
-  const Icon = categoryIcons[article.category] ?? BookOpen;
+  const Icon = categoryIcon[article.category] ?? BookOpen;
 
   const relatedArticles = blogData
     .filter((currentArticle) => currentArticle.slug !== article.slug)
     .slice(0, 2);
 
   return (
-    <main ref={pageRef} className="blog-details">
-      <section className="blog-details__hero">
-        <div className="blog-details__hero-grid" />
-
-        <div className="site-container blog-details__hero-content">
-          <Link
-            className="blog-details__back blog-details__animate"
-            to="/blog"
-          >
-            <ArrowLeft size={17} />
+    <main className="secondary-page">
+      <section className="detail-hero">
+        <div className="site-container">
+          <Link className="back-link" to="/blog">
+            <ArrowLeft size={16} />
             Back to Blog
           </Link>
 
-          <div className="blog-details__head blog-details__animate">
-            <div className="blog-details__category">
+          <Reveal>
+            <p className="detail-kicker">
               <Icon size={16} />
               {article.category}
-            </div>
+            </p>
 
             <h1>{article.title}</h1>
 
-            <p className="blog-details__excerpt">{article.excerpt}</p>
+            <p className="detail-hero__description">
+              {article.excerpt}
+            </p>
 
-            <div className="blog-details__meta">
+            <div className="detail-metrics">
               <div>
-                <CalendarDays size={16} />
-                <span>{article.date}</span>
+                <span>Published</span>
+                <strong>{article.date}</strong>
               </div>
 
               <div>
-                <Clock3 size={16} />
-                <span>{article.readTime}</span>
+                <span>Reading time</span>
+                <strong>{article.readTime}</strong>
               </div>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="blog-details__cover blog-details__animate">
-            <img
-              src={getAssetPath(article.image)}
-              alt={`${article.title} cover`}
-              onError={(event) => {
-                event.currentTarget.style.display = "none";
-              }}
-            />
-            <div className="blog-details__cover-overlay" />
-          </div>
+          <Reveal delay={1}>
+            <div className="detail-cover">
+              <img
+                src={getAssetPath(article.image)}
+                alt={`${article.title} cover`}
+                onError={(event) => {
+                  event.currentTarget.style.display = "none";
+                  event.currentTarget
+                    .closest(".detail-cover")
+                    ?.querySelector(".detail-cover__fallback")
+                    ?.classList.add("is-visible");
+                }}
+              />
+              <div className="detail-cover__fallback">
+                Article cover image
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="blog-details__body">
-        <div className="site-container blog-details__layout">
-          <div className="blog-details__tags blog-details__animate">
-            <div>
-              <Tag size={16} />
-              <span>Tags</span>
-            </div>
+      <section className="detail-body">
+        <div className="site-container detail-body__grid">
+          <div>
+            <Reveal as="div" className="detail-tags">
+              <div>
+                <Tag size={16} />
+                <span>Tags</span>
+              </div>
 
-            <div className="blog-details__tag-list">
               {article.tags.map((tag) => (
-                <span key={tag}>{tag}</span>
+                <span className="tag" key={`${article.slug}-${tag}`}>
+                  {tag}
+                </span>
               ))}
-            </div>
+            </Reveal>
+
+            {article.content.map((section, index) => (
+              <Reveal
+                as="section"
+                key={`${article.slug}-section-${index}`}
+                className="article-section"
+              >
+                <span className="article-section__index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                <div>
+                  <h2>{section.heading}</h2>
+
+                  {section.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              </Reveal>
+            ))}
+
+            {relatedArticles.length > 0 && (
+              <Reveal as="section" className="article-section">
+                <span className="article-section__index">✦</span>
+
+                <div>
+                  <h2>Keep reading</h2>
+
+                  <div className="related-grid">
+                    {relatedArticles.map((related) => (
+                      <Link
+                        key={related.slug}
+                        className="related-card"
+                        to={`/blog/${related.slug}`}
+                      >
+                        <div className="related-card__image">
+                          <img
+                            src={getAssetPath(related.image)}
+                            alt={related.title}
+                            loading="lazy"
+                            onError={(event) => {
+                              event.currentTarget.style.display =
+                                "none";
+                            }}
+                          />
+                        </div>
+
+                        <div className="related-card__body">
+                          <p>{related.category}</p>
+                          <h3>{related.title}</h3>
+                          <span>
+                            {related.readTime}
+                            <ArrowRight size={15} />
+                          </span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+            )}
           </div>
 
-          <div className="blog-details__content">
-            {article.content.map((section, index) => (
-              <section
-                key={`${article.slug}-section-${index}`}
-                className="blog-details__section blog-details__animate"
-              >
-                <div className="blog-details__section-index">
-                  {String(index + 1).padStart(2, "0")}
+          <aside>
+            <Reveal as="div" className="detail-sidebar-card">
+              <p className="detail-section__label">About The Article</p>
+              <h3>{article.category}</h3>
+              <p>{article.excerpt}</p>
+            </Reveal>
+
+            <Reveal as="div" className="detail-sidebar-card">
+              <p className="detail-section__label">Metadata</p>
+              <div className="detail-facts">
+                <div>
+                  <CalendarDays size={18} />
+                  <div>
+                    <small>Published</small>
+                    <span>{article.date}</span>
+                  </div>
                 </div>
 
-                <h2>{section.heading}</h2>
-
-                {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </section>
-            ))}
-          </div>
+                <div>
+                  <Clock3 size={18} />
+                  <div>
+                    <small>Read time</small>
+                    <span>{article.readTime}</span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </aside>
         </div>
       </section>
-
-      {relatedArticles.length > 0 && (
-        <section className="blog-details__related">
-          <div className="site-container">
-            <div className="blog-details__related-heading">
-              <p>KEEP READING</p>
-              <h2>Related articles</h2>
-            </div>
-
-            <div className="blog-details__related-grid">
-              {relatedArticles.map((related) => (
-                <Link
-                  key={related.slug}
-                  to={`/blog/${related.slug}`}
-                  className="blog-details__related-card"
-                >
-                  <div className="blog-details__related-image">
-                    <img
-                      src={getAssetPath(related.image)}
-                      alt={related.title}
-                      loading="lazy"
-                      onError={(event) => {
-                        event.currentTarget.style.display = "none";
-                      }}
-                    />
-                  </div>
-
-                  <div className="blog-details__related-body">
-                    <p>{related.category}</p>
-                    <h3>{related.title}</h3>
-                    <span>
-                      {related.readTime}
-                      <ArrowRight size={15} />
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
     </main>
   );
 }

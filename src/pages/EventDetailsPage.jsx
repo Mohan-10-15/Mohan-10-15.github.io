@@ -1,20 +1,18 @@
-import { useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import { gsap } from "gsap";
 import {
   ArrowLeft,
   CalendarDays,
-  CheckCircle2,
+  Check,
   Clock3,
   GraduationCap,
   MapPin,
   Monitor,
   Presentation,
-  Tag,
   Trophy,
   Users
 } from "lucide-react";
 
+import Reveal from "../components/common/Reveal.jsx";
 import { eventsData } from "../data/eventsData.js";
 
 const typeIcons = {
@@ -26,46 +24,27 @@ const typeIcons = {
 
 function EventDetailsPage() {
   const { eventSlug } = useParams();
-  const pageRef = useRef(null);
 
   const event = eventsData.find(
     (currentEvent) => currentEvent.slug === eventSlug
   );
 
-  useEffect(() => {
-    if (!event) {
-      return undefined;
-    }
-
-    const animationContext = gsap.context(() => {
-      gsap.from(".event-details__animate", {
-        opacity: 0,
-        y: 30,
-        duration: 0.7,
-        stagger: 0.08,
-        ease: "power3.out"
-      });
-    }, pageRef);
-
-    return () => {
-      animationContext.revert();
-    };
-  }, [event]);
-
   if (!event) {
     return (
-      <main className="event-details event-details--missing">
-        <div className="site-container event-details__missing-content">
-          <CalendarDays size={42} />
-          <p>EVENT REPORT NOT AVAILABLE</p>
-          <h1>{eventSlug.replaceAll("-", " ")}</h1>
-          <span>
-            The detailed event report has not been published yet.
-          </span>
-          <Link to="/events">
-            <ArrowLeft size={17} />
-            Return to Events
-          </Link>
+      <main className="secondary-page">
+        <div className="site-container">
+          <div className="detail-hero">
+            <Link className="back-link" to="/events">
+              <ArrowLeft size={16} />
+              Back to Events
+            </Link>
+
+            <p className="detail-kicker">Event Report Unavailable</p>
+            <h1>{eventSlug.replaceAll("-", " ")}</h1>
+            <p className="detail-hero__description">
+              The detailed event report has not been published yet.
+            </p>
+          </div>
         </div>
       </main>
     );
@@ -73,128 +52,148 @@ function EventDetailsPage() {
 
   const Icon = typeIcons[event.type] ?? Presentation;
 
-  return (
-    <main ref={pageRef} className="event-details">
-      <section className="event-details__hero">
-        <div className="event-details__hero-grid" />
+  const relatedEvents = eventsData
+    .filter((currentEvent) => currentEvent.slug !== event.slug)
+    .slice(0, 2);
 
-        <div className="site-container event-details__hero-content">
-          <Link className="event-details__back event-details__animate" to="/events">
-            <ArrowLeft size={17} />
+  return (
+    <main className="secondary-page">
+      <section className="detail-hero">
+        <div className="site-container">
+          <Link className="back-link" to="/events">
+            <ArrowLeft size={16} />
             Back to Events
           </Link>
 
-          <div className="event-details__head event-details__animate">
-            <div className="event-details__type">
+          <Reveal>
+            <p className="detail-kicker">
               <Icon size={16} />
-              {event.type}
-            </div>
+              {event.type} · {event.mode}
+            </p>
 
             <h1>{event.title}</h1>
 
-            <p className="event-details__description">
+            <p className="detail-hero__description">
               {event.description}
             </p>
 
-            <div className="event-details__status">
-              <span />
-              {event.status}
-            </div>
-          </div>
+            <span className="detail-status">{event.status}</span>
+          </Reveal>
 
-          <div className="event-details__facts event-details__animate">
-            <div>
-              <CalendarDays size={19} />
-              <span>
-                <small>Date</small>
-                {event.date}
-              </span>
-            </div>
+          <Reveal delay={1}>
+            <div className="detail-facts">
+              <div>
+                <CalendarDays size={19} />
+                <div>
+                  <small>Date</small>
+                  <span>{event.date}</span>
+                </div>
+              </div>
 
-            <div>
-              <Clock3 size={19} />
-              <span>
-                <small>Time</small>
-                {event.time}
-              </span>
-            </div>
+              <div>
+                <Clock3 size={19} />
+                <div>
+                  <small>Time</small>
+                  <span>{event.time}</span>
+                </div>
+              </div>
 
-            <div>
-              <MapPin size={19} />
-              <span>
-                <small>Location</small>
-                {event.location}
-              </span>
-            </div>
+              <div>
+                <MapPin size={19} />
+                <div>
+                  <small>Location</small>
+                  <span>{event.location}</span>
+                </div>
+              </div>
 
-            <div>
-              <Monitor size={19} />
-              <span>
-                <small>Mode</small>
-                {event.mode}
-              </span>
+              <div>
+                <Monitor size={19} />
+                <div>
+                  <small>Mode</small>
+                  <span>{event.mode}</span>
+                </div>
+              </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="event-details__body">
-        <div className="site-container event-details__layout">
-          <div className="event-details__main">
-            <section className="event-details__section event-details__animate">
-              <p className="event-details__section-label">
-                ABOUT THIS EVENT
-              </p>
-
+      <section className="detail-body">
+        <div className="site-container detail-body__grid">
+          <div>
+            <Reveal as="section" className="detail-section">
+              <p className="detail-section__label">About This Event</p>
               <h2>Event overview</h2>
-
               <p>{event.description}</p>
-            </section>
+            </Reveal>
 
-            <section className="event-details__section event-details__animate">
-              <p className="event-details__section-label">
-                HIGHLIGHTS
-              </p>
-
+            <Reveal as="section" className="detail-section">
+              <p className="detail-section__label">Highlights</p>
               <h2>Key takeaways</h2>
-
-              <div className="event-details__highlights">
+              <div className="detail-highlights">
                 {event.highlights.map((highlight) => (
-                  <div
-                    key={`${event.slug}-${highlight}`}
-                    className="event-details__highlight"
-                  >
-                    <CheckCircle2 size={19} />
+                  <div key={`${event.slug}-${highlight}`}>
+                    <Check size={18} />
                     <span>{highlight}</span>
                   </div>
                 ))}
               </div>
-            </section>
+            </Reveal>
+
+            {relatedEvents.length > 0 && (
+              <Reveal as="section" className="detail-section">
+                <p className="detail-section__label">Continue exploring</p>
+                <h2>More sessions</h2>
+                <div className="related-grid">
+                  {relatedEvents.map((related) => {
+                    const RelatedIcon =
+                      typeIcons[related.type] ?? Presentation;
+
+                    return (
+                      <Link
+                        key={related.slug}
+                        className="related-card"
+                        to={`/events/${related.slug}`}
+                      >
+                        <div className="related-card__image related-card__image--icon">
+                          <RelatedIcon size={26} />
+                        </div>
+
+                        <div className="related-card__body">
+                          <p>{related.type}</p>
+                          <h3>{related.title}</h3>
+                          <span>View session →</span>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </Reveal>
+            )}
           </div>
 
-          <aside className="event-details__sidebar">
-            <div className="event-details__sidebar-card event-details__animate">
-              <GraduationCap size={20} />
-              <p>SKILLS APPLIED</p>
-
-              <div className="event-details__skills">
+          <aside>
+            <Reveal as="div" className="detail-sidebar-card">
+              <p className="detail-section__label">Skills Applied</p>
+              <h3>
+                <GraduationCap size={18} />
+                &nbsp;Learnings
+              </h3>
+              <div className="detail-technology-list">
                 {event.skills.map((skill) => (
-                  <span key={`${event.slug}-${skill}`}>
-                    {skill}
-                  </span>
+                  <span key={`${event.slug}-${skill}`}>{skill}</span>
                 ))}
               </div>
-            </div>
+            </Reveal>
 
-            <div className="event-details__sidebar-card event-details__animate">
-              <Tag size={20} />
-              <p>EVENT TYPE</p>
-
-              <div className="event-details__type-badge">
-                <Icon size={16} />
-                {event.type}
-              </div>
-            </div>
+            <Reveal as="div" className="detail-sidebar-card">
+              <p className="detail-section__label">Event Type</p>
+              <h3>
+                <Icon size={18} />
+                &nbsp;{event.type}
+              </h3>
+              <p>{event.mode} session · {event.status.toLowerCase()}.</p>
+            </Reveal>
           </aside>
         </div>
       </section>

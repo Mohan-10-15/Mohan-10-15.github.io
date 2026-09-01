@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 
-function useLenis() {
+function useLenis({ enabled = true } = {}) {
   useEffect(() => {
+    if (!enabled) {
+      return undefined;
+    }
+
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: 1.15,
       smoothWheel: true,
       wheelMultiplier: 0.9,
       touchMultiplier: 1.1
@@ -23,7 +27,7 @@ function useLenis() {
       cancelAnimationFrame(animationFrameId);
       lenis.destroy();
     };
-  }, []);
+  }, [enabled]);
 }
 
 export default useLenis;

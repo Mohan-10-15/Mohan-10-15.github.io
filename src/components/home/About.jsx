@@ -1,136 +1,77 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  ArrowUpRight,
-  BriefcaseBusiness,
-  Code2,
-  MapPin,
-  ShieldCheck
-} from "lucide-react";
-
+import Reveal from "../common/Reveal.jsx";
 import { personalData } from "../../data/personalData.js";
 import { getAssetPath } from "../../utils/getAssetPath.js";
 
-gsap.registerPlugin(ScrollTrigger);
+const heroStats = [
+  ["4+", "Projects"],
+  ["2+", "Certifications"],
+  ["5+", "Security Domains"]
+];
 
 function About() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const animationContext = gsap.context(() => {
-      gsap.from(".about__animate", {
-        opacity: 0,
-        y: 45,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 78%",
-          once: true
-        }
-      });
-    }, sectionRef);
-
-    return () => {
-      animationContext.revert();
-    };
-  }, []);
-
   return (
-    <section ref={sectionRef} id="about" className="about">
-      <div className="site-container about__container">
-        <div className="about__visual about__animate">
-          <div className="about__image-wrapper">
+    <section id="about" className="about">
+      <div className="site-container about__layout">
+        <Reveal className="about__photo-frame">
+          <span className="frame-bg" aria-hidden="true" />
+          <div className="about__photo">
             <img
               src={getAssetPath(personalData.profileImage)}
               alt={personalData.name}
               onError={(event) => {
                 event.currentTarget.style.display = "none";
                 event.currentTarget
-                  .closest(".about__image-wrapper")
-                  ?.classList.add("about__image-wrapper--missing");
+                  .closest(".about__photo")
+                  ?.querySelector(".about__photo-fallback")
+                  ?.classList.add("is-visible");
               }}
             />
-
-            <div className="about__image-fallback">
-              <ShieldCheck size={58} />
-              <span>Add profile.jpg</span>
-            </div>
-
-            <div className="about__image-overlay" />
-          </div>
-
-          <div className="about__availability">
-            <span className="about__availability-dot" />
-
-            <div>
-              <strong>Open to opportunities</strong>
-              <p>Cybersecurity internships and collaborations</p>
+            <div className="about__photo-fallback">
+              Profile photograph
             </div>
           </div>
-        </div>
+          <p className="about__caption">Mohanakrishnan C — Chennai, IN</p>
+        </Reveal>
 
-        <div className="about__content">
-          <div className="about__eyebrow about__animate">
-            <ShieldCheck size={16} />
-            <span>About Me</span>
-          </div>
+        <div className="about__copy">
+          <Reveal>
+            <span className="eyebrow">
+              <span>
+                01 <span>/</span> PROFILE
+              </span>
+            </span>
 
-          <h2 className="about__animate">
-            Building practical security solutions through
-            <span> continuous learning.</span>
-          </h2>
+            <h2>
+              Who I <em>am</em>
+            </h2>
+          </Reveal>
 
-          <p className="about__lead about__animate">
-            {personalData.introduction}
-          </p>
+          <Reveal delay={1}>
+            <p>{personalData.introduction}</p>
 
-          <div className="about__paragraphs about__animate">
-            {personalData.about.map((paragraph) => (
+            {personalData.about.slice(0, 2).map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
-          </div>
+          </Reveal>
 
-          <div className="about__details about__animate">
-            <div>
-              <MapPin size={19} />
+          <Reveal delay={2}>
+            <blockquote>
+              &ldquo;The best way to predict the future is to
+              study the attacks of the past.&rdquo;
+              <cite>— Security Engineering</cite>
+            </blockquote>
+          </Reveal>
 
-              <span>
-                <small>Location</small>
-                {personalData.location}
-              </span>
+          <Reveal delay={3}>
+            <div className="about__stats">
+              {heroStats.map(([value, label]) => (
+                <article key={label}>
+                  <strong>{value}</strong>
+                  <span>{label}</span>
+                </article>
+              ))}
             </div>
-
-            <div>
-              <BriefcaseBusiness size={19} />
-
-              <span>
-                <small>Current Status</small>
-                B.E. Cyber Security Student
-              </span>
-            </div>
-
-            <div>
-              <Code2 size={19} />
-
-              <span>
-                <small>Primary Focus</small>
-                Security Engineering
-              </span>
-            </div>
-          </div>
-
-          <a
-            className="about__link about__animate"
-            href={personalData.socialLinks.linkedin}
-            target="_blank"
-            rel="noreferrer"
-          >
-            View LinkedIn Profile
-            <ArrowUpRight size={17} />
-          </a>
+          </Reveal>
         </div>
       </div>
     </section>

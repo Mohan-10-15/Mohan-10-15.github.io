@@ -1,52 +1,56 @@
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState } from "react";
 import {
+  ArrowRight,
   ArrowUpRight,
   Check,
-  Copy,
   Github,
   Linkedin,
   Mail,
-  MapPin,
-  Phone,
-  Send,
-  ShieldCheck
+  Send
 } from "lucide-react";
 
+import Reveal from "../common/Reveal.jsx";
 import { personalData } from "../../data/personalData.js";
+import { getAssetPath } from "../../utils/getAssetPath.js";
 
-gsap.registerPlugin(ScrollTrigger);
+const socialLinks = [
+  { label: "GitHub", href: personalData.socialLinks.github, icon: Github },
+  {
+    label: "LinkedIn",
+    href: personalData.socialLinks.linkedin,
+    icon: Linkedin
+  },
+  { label: "Email", href: personalData.socialLinks.email, icon: Mail }
+];
 
 function Contact() {
-  const sectionRef = useRef(null);
+  const [sent, setSent] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
 
-  useEffect(() => {
-    const animationContext = gsap.context(() => {
-      gsap.from(".contact__animate", {
-        opacity: 0,
-        y: 45,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          once: true
-        }
-      });
-    }, sectionRef);
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-    return () => {
-      animationContext.revert();
-    };
-  }, []);
+    const form = new FormData(event.currentTarget);
+    const name = form.get("name");
+    const email = form.get("email");
+    const message = form.get("message");
+
+    const subject = encodeURIComponent(
+      `Portfolio message from ${name}`
+    );
+
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\n${message}`
+    );
+
+    window.location.href = `mailto:${personalData.email}?subject=${subject}&body=${body}`;
+
+    setSent(true);
+  };
 
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(personalData.email);
-
       setEmailCopied(true);
 
       window.setTimeout(() => {
@@ -58,139 +62,125 @@ function Contact() {
   };
 
   return (
-    <section
-      ref={sectionRef}
-      id="contact"
-      className="contact"
-    >
-      <div className="contact__glow" />
+    <section id="contact" className="contact">
+      <div className="site-container contact__layout">
+        <div className="contact__copy">
+          <Reveal>
+            <span className="eyebrow">
+              <span>
+                08 <span>/</span> CONTACT &amp; COLLABORATION
+              </span>
+            </span>
 
-      <div className="site-container contact__container">
-        <div className="contact__content">
-          <div className="contact__eyebrow contact__animate">
-            <ShieldCheck size={16} />
-            <span>Contact and Collaboration</span>
-          </div>
+            <h2>
+              Let&apos;s create <em>secure</em>
+              <br />
+              digital experiences.
+            </h2>
 
-          <h2 className="contact__animate">
-            Let&apos;s build something
-            <span> secure and meaningful.</span>
-          </h2>
+            <p>
+              I&apos;m always open to cybersecurity internships,
+              hackathons, project collaborations and security-focused
+              work.
+            </p>
+          </Reveal>
 
-          <p className="contact__description contact__animate">
-            I am open to cybersecurity internships, student collaborations,
-            project discussions and opportunities to learn from security
-            professionals.
-          </p>
-
-          <div className="contact__availability contact__animate">
-            <span />
-
-            <div>
-              <strong>Currently open to opportunities</strong>
-              <p>
-                Cybersecurity internships, technical collaborations and
-                security-focused projects.
-              </p>
+          <Reveal delay={1}>
+            <div className="contact__availability">
+              <span className="dot" />
+              <b>{personalData.availability.status.toUpperCase()}</b>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="contact__primary-actions contact__animate">
+          <Reveal delay={2} className="contact__actions">
             <a
-              className="contact__button contact__button--primary"
-              href={personalData.socialLinks.email}
+              className="btn--dark"
+              href={getAssetPath(personalData.resumeFile)}
+              target="_blank"
+              rel="noreferrer"
             >
-              <Send size={18} />
-              Send Email
-              <ArrowUpRight size={17} />
+              Resume
+              <ArrowRight size={16} />
             </a>
+
+            <a
+              className="text-link"
+              href={`mailto:${personalData.email}`}
+              onClick={(event) => {
+                event.preventDefault();
+                copyEmail();
+              }}
+            >
+              {emailCopied ? "Email copied" : "Copy email"}
+              <ArrowUpRight size={15} />
+            </a>
+          </Reveal>
+
+          <Reveal delay={3}>
+            <div className="contact__socials">
+              {socialLinks.map(({ label, href, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={label === "Email" ? undefined : "_blank"}
+                  rel={label === "Email" ? undefined : "noreferrer"}
+                  aria-label={label}
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+
+        <Reveal delay={1}>
+          <form
+            className="contact__form"
+            onSubmit={handleSubmit}
+            aria-label="Contact form"
+          >
+            <p>Send Message</p>
+
+            <label>
+              NAME
+              <input
+                name="name"
+                required
+                placeholder="Your name"
+              />
+            </label>
+
+            <label>
+              EMAIL
+              <input
+                name="email"
+                required
+                type="email"
+                placeholder="Your email"
+              />
+            </label>
+
+            <label>
+              MESSAGE
+              <textarea
+                name="message"
+                required
+                rows={4}
+                placeholder="Write your message..."
+              />
+            </label>
 
             <button
-              type="button"
-              className="contact__button contact__button--secondary"
-              onClick={copyEmail}
+              type="submit"
+              className="btn--dark contact__submit"
             >
-              {emailCopied ? (
-                <Check size={18} />
-              ) : (
-                <Copy size={18} />
-              )}
-
-              {emailCopied ? "Email Copied" : "Copy Email"}
+              {sent ? <Check size={16} /> : <Send size={16} />}
+              {sent ? "Email app opened" : "Send message"}
             </button>
-          </div>
-        </div>
 
-        <div className="contact__details contact__animate">
-          <article className="contact__detail-card">
-            <div className="contact__detail-icon">
-              <Mail size={22} />
-            </div>
-
-            <div>
-              <p>Email</p>
-              <a href={personalData.socialLinks.email}>
-                {personalData.email}
-              </a>
-            </div>
-          </article>
-
-          <article className="contact__detail-card">
-            <div className="contact__detail-icon">
-              <Phone size={22} />
-            </div>
-
-            <div>
-              <p>Phone</p>
-              <a href={personalData.socialLinks.phone}>
-                {personalData.phone}
-              </a>
-            </div>
-          </article>
-
-          <article className="contact__detail-card">
-            <div className="contact__detail-icon">
-              <MapPin size={22} />
-            </div>
-
-            <div>
-              <p>Location</p>
-              <span>{personalData.location}</span>
-            </div>
-          </article>
-
-          <div className="contact__socials">
-            <a
-              href={personalData.socialLinks.github}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Github size={21} />
-
-              <span>
-                <small>GitHub</small>
-                Mohan-10-15
-              </span>
-
-              <ArrowUpRight size={17} />
-            </a>
-
-            <a
-              href={personalData.socialLinks.linkedin}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Linkedin size={21} />
-
-              <span>
-                <small>LinkedIn</small>
-                Mohanakrishnan C
-              </span>
-
-              <ArrowUpRight size={17} />
-            </a>
-          </div>
-        </div>
+            {emailCopied && <small>Email copied to clipboard.</small>}
+          </form>
+        </Reveal>
       </div>
     </section>
   );
