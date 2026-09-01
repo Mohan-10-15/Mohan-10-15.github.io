@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 import Marquee from "../common/Marquee.jsx";
-import RollUpText from "../common/RollUpText.jsx";
 import Reveal from "../common/Reveal.jsx";
 import { personalData } from "../../data/personalData.js";
 import { getAssetPath } from "../../utils/getAssetPath.js";
@@ -34,13 +33,7 @@ function Hero() {
         <Reveal delay={1}>
           <div className="hero__role">
             <span className="hero__role-label">I AM A</span>
-            <span className="hero__role-value">
-              <RollUpText
-                items={personalData.roles}
-                interval={2600}
-                ariaLabel="Roles"
-              />
-            </span>
+            <span className="hero__role-value">Cyber Security Engineer</span>
           </div>
 
           <p className="hero__lead">{personalData.tagline}</p>
