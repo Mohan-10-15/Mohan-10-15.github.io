@@ -699,7 +699,9 @@ h4 {
 }
 
 .hero__title em {
-  font-style: italic;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--gold);
 }
 
 .hero__role {
@@ -715,18 +717,7 @@ h4 {
   font-size: 0.68rem;
   letter-spacing: 0.18em;
   color: var(--faint);
-  border: 1px solid var(--line);
-  padding: 6px 12px;
-  border-radius: 100px;
-}
-
-.hero__role-value .roll-up {
-  height: 1.5em;
-}
-
-.hero__role-value .roll-up__item {
-  line-height: 1.5em;
-  color: var(--ink);
+  text-transform: uppercase;
 }
 
 .hero__lead {
