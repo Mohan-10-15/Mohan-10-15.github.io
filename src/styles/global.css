@@ -2,8 +2,8 @@
    Mohanakrishnan C — Portfolio
    Cream editorial theme · clean, robust layout
    No scroll-snap, no Lenis, no fragile absolute text.
-   Fonts loaded via <link> in index.html (Libre Baskerville,
-   Manrope, JetBrains Mono).
+   Fonts self-hosted in /fonts (Libre Baskerville, Manrope,
+   JetBrains Mono) and loaded via <link> in index.html.
    ============================================================ */
 
 /* ---------- Tokens ---------- */
