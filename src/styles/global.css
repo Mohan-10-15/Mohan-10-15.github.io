@@ -709,15 +709,19 @@ h4 {
   display: flex;
   align-items: center;
   gap: 16px;
+  font-family: var(--sans);
   font-weight: 600;
+  font-size: 1.35rem;
+  color: var(--ink);
 }
 
 .hero__role-label {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  color: var(--faint);
-  text-transform: uppercase;
+  font-family: var(--sans);
+  font-size: 1.35rem;
+  letter-spacing: 0;
+  color: var(--ink);
+  text-transform: none;
+  font-weight: 600;
 }
 
 .hero__lead {

@@ -1,19 +1,9 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
-import Marquee from "../common/Marquee.jsx";
 import Reveal from "../common/Reveal.jsx";
 import { personalData } from "../../data/personalData.js";
 import { getAssetPath } from "../../utils/getAssetPath.js";
-
-const marqueeItems = [
-  "Endpoint Security",
-  "Network Packet Analysis",
-  "Threat Detection",
-  "Cryptography",
-  "Detection Engineering",
-  "Secure Software"
-];
 
 function Hero() {
   return (
@@ -55,17 +45,6 @@ function Hero() {
             </a>
           </div>
         </Reveal>
-      </div>
-
-      <div className="hero__strip">
-        <Marquee speed={45}>
-          {marqueeItems.map((item) => (
-            <span className="stats-strip__item" key={item}>
-              <strong>{item}</strong>
-              <span>✦</span>
-            </span>
-          ))}
-        </Marquee>
       </div>
     </section>
   );
