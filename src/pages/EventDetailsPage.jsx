@@ -40,7 +40,7 @@ function EventDetailsPage() {
             </Link>
 
             <p className="detail-kicker">Event Report Unavailable</p>
-            <h1>{eventSlug.replaceAll("-", " ")}</h1>
+            <h1>{(eventSlug ?? "Event").replaceAll("-", " ")}</h1>
             <p className="detail-hero__description">
               The detailed event report has not been published yet.
             </p>

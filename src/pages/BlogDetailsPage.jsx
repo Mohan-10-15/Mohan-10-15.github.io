@@ -37,7 +37,7 @@ function BlogDetailsPage() {
             </Link>
 
             <p className="detail-kicker">Article Unavailable</p>
-            <h1>{articleSlug.replaceAll("-", " ")}</h1>
+            <h1>{(articleSlug ?? "Article").replaceAll("-", " ")}</h1>
             <p className="detail-hero__description">
               This technical article has not been published yet.
             </p>

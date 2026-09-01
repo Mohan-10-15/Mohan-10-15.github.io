@@ -6,6 +6,8 @@ import App from "./App.jsx";
 
 import "./styles/global.css";
 
+document.documentElement.classList.add("js");
+
 const rootElement = document.getElementById("root");
 
 if (!rootElement) {

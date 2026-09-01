@@ -1,19 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-function Reveal({
-  children,
-  className = "",
-  delay = 0,
-  as: Tag = "div",
-  ...rest
-}) {
-  const elementRef = useRef(null);
-  const [visible, setVisible] = useState(false);
+function Reveal({ children, className = "", delay = 0, as: Tag = "div", ...rest }) {
+  const ref = useRef(null);
 
   useEffect(() => {
-    const element = elementRef.current;
+    const el = ref.current;
+    if (!el) {
+      return undefined;
+    }
 
-    if (!element) {
+    const show = () => {
+      el.classList.add("is-in");
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      show();
       return undefined;
     }
 
@@ -21,29 +22,36 @@ function Reveal({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisible(true);
-            observer.disconnect();
+            show();
+            observer.unobserve(entry.target);
           }
         });
       },
-      {
-        threshold: 0.18,
-        rootMargin: "0px 0px -60px 0px"
-      }
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
     );
 
-    observer.observe(element);
+    observer.observe(el);
+
+    const fallback = window.setTimeout(() => {
+      if (!el.classList.contains("is-in")) {
+        show();
+        observer.unobserve(el);
+      }
+    }, 2200);
 
     return () => {
       observer.disconnect();
+      window.clearTimeout(fallback);
     };
   }, []);
 
   return (
     <Tag
-      ref={elementRef}
-      className={`reveal ${visible ? "is-visible" : ""} ${className}`}
-      data-reveal-delay={delay || undefined}
+      ref={ref}
+      className={`reveal ${className}`}
+      style={{
+        "--reveal-delay": delay > 0 ? `${delay * 0.1}s` : undefined
+      }}
       {...rest}
     >
       {children}
