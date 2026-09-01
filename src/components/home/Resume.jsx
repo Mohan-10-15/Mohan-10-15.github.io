@@ -83,7 +83,7 @@ function Resume() {
 
           <Reveal className="resume__actions">
             <a
-              className="btn--dark"
+              className="text-link"
               href={getAssetPath(personalData.resumeFile)}
               target="_blank"
               rel="noreferrer"

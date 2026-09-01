@@ -150,7 +150,7 @@ function CertificatesPage() {
                     </div>
 
                     <a
-                      className="btn--dark certificate-card__button"
+                      className="text-link certificate-card__button"
                       href={getAssetPath(certificate.file)}
                       target="_blank"
                       rel="noreferrer"

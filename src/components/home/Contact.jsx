@@ -94,7 +94,7 @@ function Contact() {
 
           <Reveal delay={2} className="contact__actions">
             <a
-              className="btn--dark"
+              className="text-link"
               href={getAssetPath(personalData.resumeFile)}
               target="_blank"
               rel="noreferrer"
@@ -172,7 +172,7 @@ function Contact() {
 
             <button
               type="submit"
-              className="btn--dark contact__submit"
+              className="text-link contact__submit"
             >
               {sent ? <Check size={16} /> : <Send size={16} />}
               {sent ? "Email app opened" : "Send message"}

@@ -67,7 +67,7 @@ function Credentials() {
               </div>
 
               <a
-                className="btn--dark credential-view"
+                className="text-link credential-view"
                 href={getAssetPath(featured.file)}
                 target="_blank"
                 rel="noreferrer"

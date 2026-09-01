@@ -46,9 +46,9 @@ function Hero() {
           <p className="hero__lead">{personalData.tagline}</p>
 
           <div className="hero__actions">
-            <Link className="btn--dark" to="/projects">
+            <Link className="text-link" to="/projects">
               View Projects
-              <ArrowRight size={17} />
+              <ArrowRight size={15} />
             </Link>
 
             <a

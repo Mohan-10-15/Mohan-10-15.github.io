@@ -262,7 +262,7 @@ function ProjectDetailsPage() {
                 documentation on GitHub.
               </p>
               <a
-                className="btn--dark sidebar-button"
+                className="text-link sidebar-button"
                 href={project.githubUrl}
                 target="_blank"
                 rel="noreferrer"
