@@ -2,12 +2,12 @@ export const certificatesData = [
   {
     id: 1,
     title: "Introduction to Cyber Security",
-    issuer: "Infosys Springboard",
+    issuer: "Simplilearn SkillUp",
     category: "Cybersecurity",
     date: "9 January 2026",
     certificateCode: "9696862",
     description:
-      "Foundation-level certification covering essential cybersecurity concepts, digital threats, security practices and cyber awareness.",
+      "Foundational overview of cybersecurity covering core security concepts, common cyber threats and attacks, defense mechanisms and best practices for protecting systems and data.",
     file: "/certificates/cyber-security.pdf",
     skills: [
       "Cybersecurity Fundamentals",
@@ -19,12 +19,12 @@ export const certificatesData = [
   {
     id: 2,
     title: "Introduction to Cloud Computing",
-    issuer: "Infosys Springboard",
+    issuer: "Simplilearn SkillUp",
     category: "Cloud Computing",
     date: "8 January 2026",
     certificateCode: "9691297",
     description:
-      "Introductory certification covering cloud computing concepts, service models, deployment models and modern cloud technologies.",
+      "Introductory course explaining the fundamentals of cloud computing, including deployment and service models, cloud architecture and the practical uses of cloud technology.",
     file: "/certificates/cloud-computing.pdf",
     skills: [
       "Cloud Fundamentals",
