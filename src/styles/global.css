@@ -798,7 +798,7 @@ h4 {
 .about__photo-fallback {
   position: absolute;
   inset: 0;
-  display: grid;
+  display: none;
   place-items: center;
   color: var(--faint);
   font-family: var(--mono);
