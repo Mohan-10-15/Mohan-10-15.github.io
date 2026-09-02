@@ -2,6 +2,7 @@ import { ArrowUpRight, FileBadge2 } from "lucide-react";
 
 import Reveal from "../common/Reveal.jsx";
 import { certificatesData } from "../../data/certificatesData.js";
+import { personalData } from "../../data/personalData.js";
 import { getAssetPath } from "../../utils/getAssetPath.js";
 
 function Credentials() {
@@ -37,9 +38,29 @@ function Credentials() {
               rel="noreferrer"
               aria-label={`Open ${featured.title} certificate`}
             >
-              <FileBadge2 size={44} />
-              <p>Certificate</p>
-              <h3>{featured.issuer}</h3>
+              <span className="credential-thumb">
+                <span className="credential-thumb__badge">
+                  COURSE COMPLETION
+                </span>
+                <span className="credential-thumb__title">
+                  {featured.title}
+                </span>
+                <span className="credential-thumb__body">
+                  This is to certify that
+                  <strong>{personalData.name}</strong>
+                  has successfully completed the course.
+                </span>
+                <span className="credential-thumb__footer">
+                  <span>
+                    <small>{featured.issuer}</small>
+                    <b>— CERTIFIED —</b>
+                  </span>
+                  <FileBadge2 size={26} />
+                </span>
+              </span>
+              <span className="credential-thumb__caption">
+                Open certificate
+              </span>
             </a>
 
             <div className="credential-sheet__copy">
@@ -81,33 +102,53 @@ function Credentials() {
 
         {supporting.length > 0 && (
           <div className="supporting-credentials">
-            {supporting.map((certificate) => (
-              <Reveal
-                as="article"
-                key={certificate.id}
-                className="supporting-credential"
+          {supporting.map((certificate) => (
+            <Reveal
+              as="article"
+              key={certificate.id}
+              className="supporting-credential"
+            >
+              <a
+                className="credential-thumb credential-thumb--small"
+                href={getAssetPath(certificate.file)}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Open ${certificate.title} certificate`}
               >
-                <p>
-                  {String(certificate.id).padStart(2, "0")} /{" "}
-                  {certificate.category.toUpperCase()}
-                </p>
-
-                <h3>{certificate.title}</h3>
-
-                <span>
-                  {certificate.issuer} · {certificate.date}
+                <span className="credential-thumb__title">
+                  {certificate.title}
                 </span>
+                <span className="credential-thumb__footer">
+                  <span>
+                    <small>{certificate.issuer}</small>
+                    <b>— CERTIFIED —</b>
+                  </span>
+                  <FileBadge2 size={22} />
+                </span>
+              </a>
 
-                <a
-                  href={getAssetPath(certificate.file)}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  VIEW
-                  <ArrowUpRight size={14} />
-                </a>
-              </Reveal>
-            ))}
+              <p>
+                {String(certificate.id).padStart(2, "0")} /{" "}
+                {certificate.category.toUpperCase()}
+              </p>
+
+              <h3>{certificate.title}</h3>
+
+              <span>
+                {certificate.issuer} · {certificate.date}
+              </span>
+
+              <a
+                className="supporting-credential__link"
+                href={getAssetPath(certificate.file)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                VIEW CERTIFICATE
+                <ArrowUpRight size={14} />
+              </a>
+            </Reveal>
+          ))}
           </div>
         )}
       </div>

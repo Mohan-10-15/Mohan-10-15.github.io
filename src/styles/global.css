@@ -707,21 +707,29 @@ h4 {
 .hero__role {
   margin-top: 34px;
   display: flex;
-  align-items: center;
-  gap: 16px;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
   font-family: var(--sans);
-  font-weight: 600;
-  font-size: 1.35rem;
+  font-weight: 700;
+  font-size: 1.5rem;
   color: var(--ink);
 }
 
 .hero__role-label {
   font-family: var(--sans);
-  font-size: 1.35rem;
-  letter-spacing: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.hero__role-value {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.5rem;
   color: var(--ink);
-  text-transform: none;
-  font-weight: 600;
 }
 
 .hero__lead {
@@ -1306,6 +1314,106 @@ h4 {
   color: var(--ink);
 }
 
+.credential-thumb {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 3 / 4;
+  padding: 22px 18px;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  box-shadow: 0 14px 30px rgba(23, 21, 15, 0.1);
+  text-align: left;
+  color: var(--ink);
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+
+.credential-thumb:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(23, 21, 15, 0.16);
+}
+
+.credential-thumb__badge {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+
+.credential-thumb__title {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  line-height: 1.25;
+}
+
+.credential-thumb__body {
+  margin-top: auto;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.credential-thumb__body strong {
+  display: block;
+  margin: 2px 0 6px;
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.credential-thumb__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  color: var(--gold);
+}
+
+.credential-thumb__footer small {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+  text-transform: uppercase;
+}
+
+.credential-thumb__footer b {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+
+.credential-thumb__caption {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.credential-thumb--small {
+  aspect-ratio: auto;
+  max-width: none;
+  min-height: 150px;
+}
+
 .credential-sheet__copy {
   padding: 32px;
 }
@@ -1389,7 +1497,7 @@ h4 {
   font-size: 0.85rem;
 }
 
-.supporting-credential a {
+.supporting-credential .supporting-credential__link {
   margin-top: 8px;
   display: inline-flex;
   align-items: center;
