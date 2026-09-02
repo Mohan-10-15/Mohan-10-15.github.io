@@ -1,8 +1,7 @@
-import { ArrowUpRight, FileBadge2 } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 import Reveal from "../common/Reveal.jsx";
 import { certificatesData } from "../../data/certificatesData.js";
-import { personalData } from "../../data/personalData.js";
 import { getAssetPath } from "../../utils/getAssetPath.js";
 
 function Credentials() {
@@ -39,27 +38,16 @@ function Credentials() {
               aria-label={`Open ${featured.title} certificate`}
             >
               <span className="credential-thumb">
-                <span className="credential-thumb__badge">
-                  COURSE COMPLETION
+                <iframe
+                  className="credential-thumb__pdf"
+                  src={getAssetPath(featured.file)}
+                  title={`${featured.title} certificate preview`}
+                  loading="lazy"
+                />
+                <span className="credential-thumb__overlay" />
+                <span className="credential-thumb__caption">
+                  Open certificate PDF
                 </span>
-                <span className="credential-thumb__title">
-                  {featured.title}
-                </span>
-                <span className="credential-thumb__body">
-                  This is to certify that
-                  <strong>{personalData.name}</strong>
-                  has successfully completed the course.
-                </span>
-                <span className="credential-thumb__footer">
-                  <span>
-                    <small>{featured.issuer}</small>
-                    <b>— CERTIFIED —</b>
-                  </span>
-                  <FileBadge2 size={26} />
-                </span>
-              </span>
-              <span className="credential-thumb__caption">
-                Open certificate
               </span>
             </a>
 
@@ -115,15 +103,15 @@ function Credentials() {
                 rel="noreferrer"
                 aria-label={`Open ${certificate.title} certificate`}
               >
-                <span className="credential-thumb__title">
-                  {certificate.title}
-                </span>
-                <span className="credential-thumb__footer">
-                  <span>
-                    <small>{certificate.issuer}</small>
-                    <b>— CERTIFIED —</b>
-                  </span>
-                  <FileBadge2 size={22} />
+                <iframe
+                  className="credential-thumb__pdf"
+                  src={getAssetPath(certificate.file)}
+                  title={`${certificate.title} certificate preview`}
+                  loading="lazy"
+                />
+                <span className="credential-thumb__overlay" />
+                <span className="credential-thumb__caption">
+                  Open certificate PDF
                 </span>
               </a>
 

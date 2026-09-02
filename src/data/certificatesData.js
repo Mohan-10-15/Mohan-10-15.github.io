@@ -2,7 +2,7 @@ export const certificatesData = [
   {
     id: 1,
     title: "Introduction to Cyber Security",
-    issuer: "Simplilearn SkillUp",
+    issuer: "Simplilearn",
     category: "Cybersecurity",
     date: "9 January 2026",
     certificateCode: "9696862",
@@ -19,7 +19,7 @@ export const certificatesData = [
   {
     id: 2,
     title: "Introduction to Cloud Computing",
-    issuer: "Simplilearn SkillUp",
+    issuer: "Simplilearn",
     category: "Cloud Computing",
     date: "8 January 2026",
     certificateCode: "9691297",
