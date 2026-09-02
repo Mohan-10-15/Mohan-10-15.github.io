@@ -22,9 +22,7 @@ function Hero() {
 
         <Reveal delay={1}>
           <p className="hero__role-line">
-            I&apos;m a {personalData.shortTitle.toLowerCase()} focused on{" "}
-            {personalData.tagline.charAt(0).toLowerCase()}
-            {personalData.tagline.slice(1)}
+            I am a {personalData.shortTitle.toLowerCase()}.
           </p>
 
           <div className="hero__actions">
