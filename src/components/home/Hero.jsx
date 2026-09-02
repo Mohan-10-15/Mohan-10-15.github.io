@@ -21,12 +21,11 @@ function Hero() {
         </Reveal>
 
         <Reveal delay={1}>
-          <div className="hero__role">
-            <span className="hero__role-label">I AM A</span>
-            <span className="hero__role-value">Cyber Security Engineer</span>
-          </div>
-
-          <p className="hero__lead">{personalData.tagline}</p>
+          <p className="hero__role-line">
+            I&apos;m a {personalData.shortTitle.toLowerCase()} focused on{" "}
+            {personalData.tagline.charAt(0).toLowerCase()}
+            {personalData.tagline.slice(1)}
+          </p>
 
           <div className="hero__actions">
             <Link className="text-link" to="/projects">
