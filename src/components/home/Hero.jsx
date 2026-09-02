@@ -22,8 +22,8 @@ function Hero() {
 
         <Reveal delay={1}>
           <p className="hero__role-line">
-            I am a {personalData.shortTitle.toLowerCase()} building
-            practical security tools.
+            I am a <em>{personalData.shortTitle}</em>, building practical
+            security tools for real-world defence.
           </p>
 
           <div className="hero__actions">

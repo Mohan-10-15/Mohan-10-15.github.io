@@ -1,18 +1,10 @@
-import {
-  ArrowUpRight,
-  BadgeCheck,
-  CalendarDays,
-  Hash,
-} from "lucide-react";
+import { ArrowUpRight, BadgeCheck } from "lucide-react";
 
 import Reveal from "../common/Reveal.jsx";
 import { certificatesData } from "../../data/certificatesData.js";
 import { getAssetPath } from "../../utils/getAssetPath.js";
 
 function Credentials() {
-  const featured = certificatesData[0];
-  const supporting = certificatesData.slice(1);
-
   return (
     <section id="credentials" className="credentials">
       <div className="site-container">
@@ -33,139 +25,51 @@ function Credentials() {
           </p>
         </Reveal>
 
-        {featured && (
-          <Reveal className="credential-sheet">
-            <div className="credential-sheet__preview">
-              <a
-                className="credential-thumb"
-                href={getAssetPath(featured.file)}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`Open ${featured.title} certificate`}
-              >
-                <iframe
-                  className="credential-thumb__pdf"
-                  src={getAssetPath(featured.file)}
-                  title={`${featured.title} certificate preview`}
-                  loading="lazy"
-                />
-                <span className="credential-thumb__overlay" />
-                <span className="credential-thumb__caption">
-                  Open certificate PDF
+        <div className="certificate-list">
+          {certificatesData.map((certificate, index) => (
+            <Reveal
+              as="article"
+              key={certificate.id}
+              delay={index > 0 ? 1 : 0}
+              className="credential-row"
+            >
+              <div className="credential-row__index">
+                {String(certificate.id).padStart(2, "0")}
+              </div>
+
+              <div className="credential-row__main">
+                <span className="credential-row__category">
+                  {certificate.category}
                 </span>
-              </a>
-            </div>
 
-            <div className="credential-sheet__copy">
-              <span className="credential-type">
-                <BadgeCheck size={14} />
-                Featured Credential
-              </span>
+                <h3>{certificate.title}</h3>
 
-              <h3>{featured.title}</h3>
-
-              <p className="issuer">Issued by {featured.issuer}</p>
-
-              <div className="credential-facts">
-                <div>
-                  <CalendarDays size={15} />
-                  <span>
-                    <strong>DATE EARNED</strong>
-                    {featured.date}
+                <div className="credential-row__meta">
+                  <span>{certificate.issuer}</span>
+                  <span>{certificate.date}</span>
+                  <span className="credential-row__code">
+                    CODE {certificate.certificateCode}
                   </span>
-                </div>
-
-                <div>
-                  <Hash size={15} />
-                  <span>
-                    <strong>CREDENTIAL CODE</strong>
-                    {featured.certificateCode}
-                  </span>
-                </div>
-
-                <div>
-                  <BadgeCheck size={15} />
-                  <span>
-                    <strong>STATUS</strong>
+                  <span className="credential-row__verified">
+                    <BadgeCheck size={13} />
                     Verified
                   </span>
                 </div>
               </div>
 
-              {featured.skills.length > 0 && (
-                <div className="credential-skills">
-                  {featured.skills.map((skill) => (
-                    <span key={`${featured.id}-${skill}`}>
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              )}
-
               <a
-                className="btn btn--dark credential-view"
-                href={getAssetPath(featured.file)}
+                className="credential-row__link"
+                href={getAssetPath(certificate.file)}
                 target="_blank"
                 rel="noreferrer"
+                aria-label={`Open ${certificate.title} certificate`}
               >
-                View Credential
-                <ArrowUpRight size={16} />
+                View
+                <ArrowUpRight size={15} />
               </a>
-            </div>
-          </Reveal>
-        )}
-
-        {supporting.length > 0 && (
-          <div className="supporting-credentials">
-            {supporting.map((certificate) => (
-              <Reveal
-                as="article"
-                key={certificate.id}
-                className="supporting-credential"
-              >
-                <a
-                  className="credential-thumb credential-thumb--small"
-                  href={getAssetPath(certificate.file)}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Open ${certificate.title} certificate`}
-                >
-                  <iframe
-                    className="credential-thumb__pdf"
-                    src={getAssetPath(certificate.file)}
-                    title={`${certificate.title} certificate preview`}
-                    loading="lazy"
-                  />
-                  <span className="credential-thumb__overlay" />
-                  <span className="credential-thumb__caption">
-                    Open certificate PDF
-                  </span>
-                </a>
-
-                <p className="supporting-credential__tag">
-                  {String(certificate.id).padStart(2, "0")} /{" "}
-                  {certificate.category.toUpperCase()}
-                </p>
-
-                <h3>{certificate.title}</h3>
-
-                <span className="supporting-credential__meta">
-                  {certificate.issuer} · {certificate.date}
-                </span>
-
-                <a
-                  className="supporting-credential__link"
-                  href={getAssetPath(certificate.file)}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  VIEW CERTIFICATE
-                  <ArrowUpRight size={14} />
-                </a>
-              </Reveal>
-            ))}
-          </div>
-        )}
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

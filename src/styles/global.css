@@ -706,12 +706,19 @@ h4 {
 
 .hero__role-line {
   margin-top: 34px;
-  max-width: 620px;
+  max-width: 640px;
   font-family: var(--sans);
-  font-weight: 600;
-  font-size: 1.15rem;
-  line-height: 1.7;
-  color: var(--ink-soft);
+  font-weight: 500;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+.hero__role-line em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 700;
+  color: var(--gold);
 }
 
 .hero__actions {
@@ -1252,247 +1259,102 @@ h4 {
   padding: clamp(56px, 9vh, 96px) 0;
 }
 
-.credential-sheet {
-  display: grid;
-  grid-template-columns: minmax(260px, 360px) 1fr;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--paper);
-}
-
-.credential-sheet__preview {
-  display: grid;
-  place-items: center;
-  padding: 34px 26px;
-  background: var(--bg);
-  border-right: 1px solid var(--line);
-}
-
-.credential-thumb {
-  position: relative;
+.certificate-list {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 300px;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-  background: var(--paper);
-  border: 1px solid var(--line-strong);
-  border-radius: 8px;
-  box-shadow: 0 14px 30px rgba(23, 21, 15, 0.1);
-  color: var(--ink);
-  transition:
-    transform 0.25s var(--ease),
-    box-shadow 0.25s var(--ease);
 }
 
-.credential-thumb:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(23, 21, 15, 0.16);
-}
-
-.credential-thumb__pdf {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: var(--paper);
-}
-
-.credential-thumb__overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(23, 21, 15, 0.55) 0%,
-    rgba(23, 21, 15, 0.05) 40%
-  );
-  opacity: 0;
-  transition: opacity 0.25s var(--ease);
-}
-
-.credential-thumb:hover .credential-thumb__overlay {
-  opacity: 1;
-}
-
-.credential-thumb__caption {
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 14px;
-  z-index: 2;
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--paper);
-  transform: translateY(8px);
-  opacity: 0;
-  transition:
-    transform 0.25s var(--ease),
-    opacity 0.25s var(--ease);
-}
-
-.credential-thumb:hover .credential-thumb__caption {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.credential-thumb--small {
-  aspect-ratio: 3 / 2.2;
-  max-width: none;
-}
-
-.credential-sheet__copy {
-  padding: 32px;
-}
-
-.credential-type {
-  display: inline-flex;
+.credential-row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 22px;
   align-items: center;
-  gap: 8px;
+  padding: 26px 4px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.2s var(--ease);
+}
+
+.credential-row:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.credential-row:hover {
+  background: var(--paper);
+}
+
+.credential-row__index {
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.86rem;
+  color: var(--gold);
+}
+
+.credential-row__category {
+  font-family: var(--mono);
+  font-size: 0.68rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gold);
-  border: 1px solid rgba(168, 135, 59, 0.4);
-  border-radius: 100px;
-  padding: 7px 14px;
-}
-
-.credential-sheet__copy h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  margin-top: 20px;
-  line-height: 1.15;
-}
-
-.credential-sheet__copy .issuer {
-  color: var(--muted);
-  margin-top: 10px;
-  font-size: 0.95rem;
-}
-
-.credential-facts {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 28px;
-  border-top: 1px solid var(--line);
-  padding-top: 24px;
-}
-
-.credential-facts div {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  color: var(--gold);
-}
-
-.credential-facts div > svg {
-  margin-top: 2px;
-  flex-shrink: 0;
-}
-
-.credential-facts div span {
-  display: block;
-  font-size: 0.92rem;
-  color: var(--ink);
-}
-
-.credential-facts div strong {
-  display: block;
-  font-family: var(--mono);
-  font-size: 0.64rem;
-  font-weight: 400;
-  letter-spacing: 0.14em;
   color: var(--faint);
-  margin-bottom: 5px;
 }
 
-.credential-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 24px;
-}
-
-.credential-skills span {
-  font-size: 0.74rem;
-  padding: 6px 12px;
-  border: 1px solid var(--line);
-  border-radius: 100px;
-  color: var(--ink-soft);
-  background: var(--bg);
-}
-
-.credential-view {
-  margin-top: 28px;
-}
-
-.supporting-credentials {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-  margin-top: 26px;
-}
-
-.supporting-credential {
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--paper);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.supporting-credential__tag {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  color: var(--gold);
-}
-
-.supporting-credential h3 {
+.credential-row h3 {
   font-family: var(--serif);
-  font-size: 1.2rem;
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  margin-top: 8px;
   line-height: 1.2;
 }
 
-.supporting-credential__meta {
+.credential-row__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin-top: 12px;
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.86rem;
 }
 
-.supporting-credential .supporting-credential__link {
-  margin-top: 8px;
+.credential-row__code {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+
+.credential-row__verified {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-weight: 700;
-  color: var(--ink);
-  font-size: 0.85rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--green);
 }
 
-@media (max-width: 800px) {
-  .credential-sheet {
-    grid-template-columns: 1fr;
+.credential-row__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 2px;
+  line-height: 1;
+  white-space: nowrap;
+  transition: opacity 0.2s var(--ease);
+}
+
+.credential-row__link:hover {
+  opacity: 0.65;
+}
+
+@media (max-width: 720px) {
+  .credential-row {
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
   }
 
-  .credential-sheet__preview {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .credential-facts {
-    grid-template-columns: 1fr;
-  }
-
-  .supporting-credentials {
-    grid-template-columns: 1fr;
+  .credential-row__link {
+    grid-column: 2;
   }
 }
 
