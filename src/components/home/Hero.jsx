@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 
 import Reveal from "../common/Reveal.jsx";
 import { personalData } from "../../data/personalData.js";
@@ -11,20 +11,34 @@ function Hero() {
       <div className="site-container">
         <Reveal>
           <p className="hero__kicker">
-            HELLO, I&apos;M — {personalData.firstName.toUpperCase()}{" "}
-            {personalData.name.split(" ").at(-1).toUpperCase()}
+            {personalData.firstName.toUpperCase()} ·{" "}
+            {personalData.shortTitle.toUpperCase()}
           </p>
 
           <h1 className="hero__title">
-            Building secure digital <em>systems</em> that matter.
+            I build systems.
+            <br />
+            I study how they <em>fail.</em>
           </h1>
         </Reveal>
 
         <Reveal delay={1}>
           <p className="hero__role-line">
-            I am a <em>{personalData.shortTitle}</em>, building practical
-            security tools for real-world defence.
+            <em>{personalData.shortTitle}</em> — {personalData.introduction}{" "}
+            {personalData.tagline}
           </p>
+
+          <div className="hero__meta-row">
+            <span className="hero__location">
+              <MapPin size={14} />
+              {personalData.location}
+            </span>
+
+            <span className="hero__status">
+              <span className="dot" aria-hidden="true" />
+              {personalData.availability.status}
+            </span>
+          </div>
 
           <div className="hero__actions">
             <Link className="text-link" to="/projects">
@@ -43,6 +57,11 @@ function Hero() {
             </a>
           </div>
         </Reveal>
+
+        <div className="hero__scroll" aria-hidden="true">
+          <span>Scroll</span>
+          <i />
+        </div>
       </div>
     </section>
   );
