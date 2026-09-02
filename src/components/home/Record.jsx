@@ -19,16 +19,33 @@ const categories = [
   }
 ];
 
+const articleTitleParts = {
+  "endpoint-detection-fundamentals": [
+    "Endpoint Detection & Response",
+    "Building a Home-grown EDR"
+  ],
+  "network-threat-detection-with-scapy": [
+    "Detecting Port Scans & SYN Floods",
+    "DNS Tunnels with Scapy"
+  ],
+  "practical-cryptography-fernet": [
+    "Practical Cryptography in Python",
+    "Fernet & Hashlib"
+  ]
+};
+
 function buildStories() {
   const stories = [];
 
   blogData.forEach((article) => {
+    const parts = articleTitleParts[article.slug];
+
     stories.push({
       key: `writing-${article.slug}`,
       category: "WRITING · TECHNICAL JOURNAL",
       date: article.date,
-      titleStart: article.title.split(":")[0],
-      titleAccent: article.title.split(":")[1] ?? "",
+      titleStart: parts ? parts[0] : article.title,
+      titleAccent: parts ? parts[1] : "",
       description: article.excerpt,
       tags: article.tags.slice(0, 3),
       href: `/blog/${article.slug}`
